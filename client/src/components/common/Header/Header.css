@@ -1,0 +1,68 @@
+/* Header.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+:root {
+    --text-color: #222;
+    --hover-color: #000;
+    --background-color: #fff;
+}
+
+.modern-header {
+    background-color: var(--background-color);
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 1rem 2rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.modern-nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modern-logo {
+    font-size: 1.4rem;
+    font-weight: 400;
+    text-decoration: none;
+    color: var(--text-color);
+    letter-spacing: 0.5px;
+}
+
+.modern-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.modern-link {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 300;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.modern-link:hover {
+    color: var(--hover-color);
+}
+
+.modern-link::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 1px;
+    background: var(--hover-color);
+    transition: width 0.2s ease;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+}
+
+.modern-link:hover::after {
+    width: 100%;
+}

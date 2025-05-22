@@ -1,0 +1,197 @@
+.filter-panel {
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+  color: #222;
+}
+
+.filter-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.filter-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f1f1f;
+}
+
+.filter-header svg {
+  color: #555;
+  font-size: 1.1rem;
+}
+
+.filter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Контейнер для інпутів ціни */
+.price-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+/* Інпути ціни */
+.price-input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background-color: #f9f9f9;
+  color: #222;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+/* При фокусі */
+.price-input:focus {
+  border-color: #888;
+  background-color: #fff;
+  outline: none;
+}
+
+/* Вимикаємо стрілки для number input */
+/* Chrome, Safari, Edge, Opera */
+.price-input::-webkit-outer-spin-button,
+.price-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.price-input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Селекти */
+.filter-select {
+  width: 160px; /* фіксована ширина */
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background-color: #f9f9f9;
+  color: #222;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.filter-select:focus {
+  border-color: #888;
+  background-color: #fff;
+  outline: none;
+}
+
+/* Чекбокси */
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #333;
+  cursor: pointer;
+}
+
+.filter-checkbox label {
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+/* Кнопки */
+.filter-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.filter-button,
+.reset-button {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.filter-button {
+  background-color: #222;
+  color: #fff;
+}
+
+.filter-button:hover {
+  background-color: #111;
+}
+
+.reset-button {
+  background-color: #f3f4f6;
+  color: #444;
+  border: 1px solid #e5e7eb;
+}
+
+.reset-button:hover {
+  background-color: #e5e7eb;
+  color: #222;
+}
+
+.filter-button svg,
+.reset-button svg {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* 📱 Адаптивність */
+@media (max-width: 768px) {
+  .price-inputs {
+    flex-direction: column;
+  }
+
+  .price-input {
+    width: 100%;
+  }
+
+  .filter-select {
+    width: 100%;
+  }
+
+  .filter-actions {
+    flex-direction: column;
+  }
+
+  .filter-button,
+  .reset-button {
+    width: 100%;
+  }
+}

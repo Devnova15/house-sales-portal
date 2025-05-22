@@ -1,0 +1,158 @@
+.house-card {
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+  position: relative;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.house-card:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 22px 40px rgba(0, 0, 0, 0.15);
+}
+
+.house-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.house-image-container {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  border-bottom: 1px solid #f0f0f0;
+  background: #f9fafb;
+}
+
+.house-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease-out;
+  border-radius: 24px 24px 0 0;
+  will-change: transform;
+}
+
+.house-card:hover .house-image {
+  transform: scale(1.1);
+  filter: contrast(1.05);
+}
+
+.house-price {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: rgba(22, 22, 22, 0.85);
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 99px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.03em;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  user-select: none;
+  z-index: 10;
+}
+
+.house-info {
+  padding: 1.7rem 1.8rem 2rem;
+  background: #fff;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.house-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0 0 0.9rem;
+  color: #111827;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.3;
+  min-height: 2.6em;
+}
+
+.house-address {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #4b5563;
+  font-size: 1rem;
+  margin-bottom: 1.4rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.house-address svg {
+  color: #6b7280;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+
+.house-card:hover .house-address svg {
+  color: #111827;
+}
+
+.house-specs {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #f3f4f6;
+  padding-top: 1.2rem;
+  margin-top: auto;
+}
+
+.spec-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #374151;
+  font-size: 1rem;
+  font-weight: 600;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+.spec-item svg {
+  color: #6b7280;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+
+.house-card:hover .spec-item,
+.house-card:hover .spec-item svg {
+  color: #111827;
+}
+
+/* Адаптивні стилі */
+@media (max-width: 768px) {
+  .house-image-container {
+    height: 200px;
+  }
+  
+  .house-title {
+    font-size: 1.2rem;
+  }
+  
+  .house-info {
+    padding: 1.4rem 1.5rem 1.8rem;
+  }
+}

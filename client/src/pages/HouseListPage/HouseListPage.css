@@ -1,0 +1,126 @@
+/* src/pages/HouseListPage/HouseListPage.css */
+.house-list-page {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+  background-color: #f9fafb;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.page-header h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 0.8rem;
+  letter-spacing: -0.02em;
+}
+
+.page-subtitle {
+  font-size: 1.2rem;
+  color: #6b7280;
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.house-list-container {
+  display: flex;
+  gap: 3rem;
+}
+
+.filter-sidebar {
+  flex: 0 0 320px;
+  background-color: #fff;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+  overflow: hidden;
+}
+
+.houses-main {
+  flex: 1;
+}
+
+.houses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 2.5rem;
+}
+
+.loading, .error, .no-houses {
+  text-align: center;
+  padding: 5rem 2rem;
+  background-color: #fff;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.loading {
+  font-size: 1.2rem;
+  color: #2563eb;
+}
+
+.error {
+  color: #dc2626;
+}
+
+.no-houses {
+  color: #6b7280;
+  font-size: 1.1rem;
+  padding: 6rem 2rem;
+  line-height: 1.6;
+}
+
+/* Адаптивність */
+@media (max-width: 1100px) {
+  .house-list-container {
+    flex-direction: column;
+  }
+  
+  .filter-sidebar {
+    flex: none;
+    width: 100%;
+    margin-bottom: 2.5rem;
+    position: static;
+  }
+  
+  .page-header h1 {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .houses-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.8rem;
+  }
+  
+  .house-list-page {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .houses-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .page-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .page-subtitle {
+    font-size: 1rem;
+  }
+}
