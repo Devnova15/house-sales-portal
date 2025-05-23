@@ -3,14 +3,13 @@ import { FaHome, FaSearchLocation, FaPhoneAlt, FaMapMarkerAlt } from 'react-icon
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './HomePage.css';
-
-// Фікс іконок Leaflet в React (без цього маркери не відображаються)
 import L from 'leaflet';
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
+import FeaturedHouses from '../../components/house/FeaturedHouses';
 
 const HomePage = () => {
-    const center = [50.4501, 30.5234]; // Київ
+    const center = [50.202664892265766, 30.274876895590857];
 
     return (
         <>
@@ -48,12 +47,14 @@ const HomePage = () => {
                 </div>
             </section>
 
+            <FeaturedHouses />
+
             <section className="map-section">
                 <div className="map-container">
                     <div className="map-header">
                         <FaMapMarkerAlt className="map-icon" />
                         <h2>Місце розташування</h2>
-                        <p>Наші будинки розташовані в найкращих районах Києва та області</p>
+                        <p>Наші будинки розташовані поблизу Києва в зручному місці</p>
                     </div>
 
                     <MapContainer

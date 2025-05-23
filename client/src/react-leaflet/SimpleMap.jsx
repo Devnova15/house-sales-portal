@@ -1,6 +1,7 @@
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { DefaultIcon } from './leafletIcon';
 
 export const SimpleMap = () => {
     return (
@@ -9,7 +10,7 @@ export const SimpleMap = () => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution="&copy; OpenStreetMap contributors"
             />
-            <Marker position={[50.4501, 30.5234]}>
+            <Marker position={[50.4501, 30.5234]} icon={DefaultIcon}>
                 <Popup>Це Київ!</Popup>
             </Marker>
         </MapContainer>
