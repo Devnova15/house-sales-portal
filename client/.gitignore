@@ -4,6 +4,9 @@ client/node_modules
 /.pnp
 .pnp.js
 .env
+client/.env
+client/create-admin-user.js
+
 #Файл админ
 create-admin-user.js
 
