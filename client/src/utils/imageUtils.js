@@ -2,17 +2,23 @@
 export const processImagePath = (imagePath) => {
   if (!imagePath) return '/images/placeholder-house.jpg';
 
-  // Если путь уже начинается с /, оставляем как есть
-  if (imagePath.startsWith('/')) return imagePath;
+  // If path already starts with /, return it as is (it's already a full path)
+  if (imagePath.startsWith('/')) {
+    return imagePath;
+  }
 
-  // Если указан только имя файла, добавляем полный путь
-  if (!imagePath.includes('/')) return `/images/houses/house_1/${imagePath}`;
+  // If only filename is provided (no slashes), assume it's in the default folder
+  if (!imagePath.includes('/')) {
+    return `/images/houses/default/${imagePath}`;
+  }
 
-  // Если указан относительный путь с папкой, но без /, добавляем /
-  if (imagePath.startsWith('images/')) return `/${imagePath}`;
+  // If path starts with 'images/' but no leading slash, add the slash
+  if (imagePath.startsWith('images/')) {
+    return `/${imagePath}`;
+  }
 
-  // В остальных случаях добавляем полный путь
-  return `/images/houses/${imagePath}`;
+  // For all other cases, add the leading slash to make it a full path
+  return `/${imagePath}`;
 };
 
 export const processImages = (images) => {

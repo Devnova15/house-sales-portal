@@ -1,4 +1,25 @@
-# Logs
+# Зависимости
+node_modules
+client/node_modules
+/.pnp
+.pnp.js
+.env
+#Файл админ
+create-admin-user.js
+
+# Тестирование
+/coverage
+client/coverage
+
+# Сборка
+/build
+/dist
+client/build
+client/dist
+dist-ssr
+*.local
+
+# Логи
 logs
 *.log
 npm-debug.log*
@@ -7,14 +28,24 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+AdminLoginPage.jsx
 
-# Editor directories and files
+# Конфиденциальные данные
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+client/.env
+client/.env.local
+client/.env.development
+client/.env.test
+client/.env.production
+
+# Директории и файлы редакторов
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
 .DS_Store
 *.suo
@@ -22,3 +53,30 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Кэш
+.cache
+.temp
+.tmp
+.eslintcache
+.parcel-cache
+
+# Загруженные пользователем изображения и файлы
+public/images/houses/*
+!public/images/houses/default/
+!public/images/placeholder-house.jpg
+uploads/*
+!uploads/.gitkeep
+
+# Временные файлы
+.temp
+.tmp
+tmp
+
+# Резервные копии
+*.bak
+*.backup
+
+# Прочее
+.thumbs.db
+Thumbs.db

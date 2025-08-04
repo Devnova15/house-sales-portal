@@ -25,17 +25,16 @@ const shippingMethods = require('./routes/shippingMethods');
 const paymentMethods = require('./routes/paymentMethods');
 const partners = require('./routes/partners');
 const houses = require('./routes/houses'); // Добавляем импорт маршрутов для домов
+const upload = require('./routes/upload');
 // const mainRoute = require('./routes/index');
 
 const app = express();
 
-// Включаем CORS для всех маршрутов (добавляем перед другими middleware)
 app.use(cors());
 
-// Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// Добавьте эту строку в server.js после определения app
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Если вам также нужно указать конкретные пути для статики
@@ -44,20 +43,18 @@ app.use('/images', express.static(path.join(__dirname, 'public/images')));
 const db = require('./config/keys').mongoURI;
 
 // Connect to MongoDB
-// Connect to MongoDB
 mongoose
     .connect(db, {
         useNewUrlParser: true,
         useFindAndModify: false,
         useUnifiedTopology: true,
         useCreateIndex: true,
-        connectTimeoutMS: 30000, // Увеличиваем таймаут
-        socketTimeoutMS: 45000   // Увеличиваем таймаут сокета
+        connectTimeoutMS: 30000,
+        socketTimeoutMS: 45000
     })
     .then(() => console.log('MongoDB Connected'))
     .catch((err) => console.log('MongoDB Connection Error:', err));
 
-// Добавьте обработчики событий для MongoDB
 mongoose.connection.on('error', (err) => {
     console.error('Mongoose connection error:', err);
 });
@@ -68,11 +65,10 @@ app.use(passport.initialize());
 // Passport Config
 require('./config/passport')(passport);
 
-// В server.js добавьте перед другими маршрутами
 app.get('/test-static', (req, res) => {
   const testImagePath = path.join(__dirname, 'public/images/placeholder-house.jpg');
   const housesPath = path.join(__dirname, 'public/images/houses');
-  
+
   const exists = {
     placeholderExists: require('fs').existsSync(testImagePath),
     housesDirExists: require('fs').existsSync(housesPath),
@@ -80,7 +76,7 @@ app.get('/test-static', (req, res) => {
       ? require('fs').readdirSync(housesPath)
       : []
   };
-  
+
   res.json({
     staticConfig: {
       publicPath: path.join(__dirname, 'public'),
@@ -114,6 +110,7 @@ app.use('/api/shipping-methods', shippingMethods);
 app.use('/api/payment-methods', paymentMethods);
 app.use('/api/partners', partners);
 app.use('/api/houses', houses); // Добавляем маршруты для домов
+app.use('/api/upload', upload); // Добавляем маршруты для загрузки файлов
 // app.use('/', mainRoute);
 
 // Server static assets if in production

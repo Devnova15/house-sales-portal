@@ -30,7 +30,6 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 
 const Footer = () => {
-    // Colors - оновлені для відповідності дизайну Solus
     const bgColor = useColorModeValue('gray.900', 'gray.900');
     const textColor = useColorModeValue('gray.400', 'gray.400');
     const headingColor = useColorModeValue('white', 'white');
@@ -51,7 +50,6 @@ const Footer = () => {
         >
             <Container maxW="100%" px={[4, 6, 8, 10]}>
                 <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8} mb={10}>
-                    {/* About Section */}
                     <Stack spacing={4}>
                         <Flex align="center">
                             <Icon as={FaHome} w={6} h={6} color={iconColor} mr={2} />
@@ -65,7 +63,6 @@ const Footer = () => {
                         </Text>
                     </Stack>
 
-                    {/* Quick Links */}
                     <Stack spacing={4}>
                         <Heading as="h3" size="md" color={headingColor}>
                             Швидкі посилання
@@ -114,7 +111,6 @@ const Footer = () => {
                         </Stack>
                     </Stack>
 
-                    {/* Contact Info */}
                     <Stack spacing={4}>
                         <Heading as="h3" size="md" color={headingColor}>
                             Контакти
@@ -135,7 +131,6 @@ const Footer = () => {
                         </VStack>
                     </Stack>
 
-                    {/* Newsletter */}
                     <Stack spacing={4}>
                         <Heading as="h3" size="md" color={headingColor}>
                             Підписка на новини
@@ -260,7 +255,6 @@ const Footer = () => {
                     </Flex>
                 </Box>
 
-                {/* Copyright */}
                 <Divider mb={6} borderColor={borderColor} />
                 <Flex 
                     direction={{ base: 'column', md: 'row' }}

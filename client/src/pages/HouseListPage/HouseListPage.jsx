@@ -1,4 +1,3 @@
-// src/pages/HouseListPage/HouseListPage.jsx
 import { useState, useEffect } from 'react';
 import { 
     Container, 
@@ -30,13 +29,11 @@ const HouseListPage = () => {
     const [error, setError] = useState(null);
     const [currentFilters, setCurrentFilters] = useState({});
 
-    // Responsive settings
     const columns = useBreakpointValue({ base: 1, md: 2, lg: 3 });
     const headerPadding = useBreakpointValue({ base: 6, md: 10, lg: 16 });
     const headerTextAlign = useBreakpointValue({ base: 'center', md: 'center' });
     const layoutDirection = useBreakpointValue({ base: 'column', lg: 'row' });
 
-    // Colors
     const bgColor = useColorModeValue('gray.50', 'gray.900');
     const headerBgColor = useColorModeValue('brand.600', 'brand.800');
     const headerTextColor = useColorModeValue('white', 'white');
@@ -65,7 +62,6 @@ const HouseListPage = () => {
         fetchHouses(filters);
     };
 
-    // Loader component
     const LoaderComponent = () => (
         <Flex 
             justify="center" 

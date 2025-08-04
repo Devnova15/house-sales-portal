@@ -1,7 +1,5 @@
-// src/services/houseService.js
 import axios from 'axios';
 
-// API URL
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
 
 export const houseService = {
@@ -53,6 +51,54 @@ export const houseService = {
       return response.data;
     } catch (error) {
       console.error('Ошибка при удалении дома:', error);
+      throw error;
+    }
+  },
+
+  async uploadImage(file, houseId) {
+    try {
+      // Create a FormData object to send the file
+      const formData = new FormData();
+      formData.append('image', file);
+      formData.append('house_id', houseId);
+
+      // Send the file to the server
+      const response = await axios.post(`${API_URL}/upload/image`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error('Ошибка при загрузке изображения:', error);
+      throw error;
+    }
+  },
+
+  async uploadImages(files, houseId) {
+    try {
+      // Create a FormData object to send the files
+      const formData = new FormData();
+
+      // Append each file to the FormData object
+      files.forEach(file => {
+        formData.append('images', file);
+      });
+
+      // Append the house ID
+      formData.append('house_id', houseId);
+
+      // Send the files to the server
+      const response = await axios.post(`${API_URL}/upload/images`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error('Ошибка при загрузке изображений:', error);
       throw error;
     }
   }

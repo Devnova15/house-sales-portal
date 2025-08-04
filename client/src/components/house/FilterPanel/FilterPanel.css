@@ -1,144 +1,149 @@
 .filter-panel {
-  background-color: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  background-color: var(--dark-bg-secondary, #1e1e1e);
+  border-radius: 8px;
+  box-shadow: var(--shadow-md, 0 4px 8px rgba(0, 0, 0, 0.4));
   padding: 2rem;
   font-family: 'Inter', sans-serif;
-  color: #222;
+  color: var(--text-secondary, #e0e0e0);
+  border: 1px solid var(--dark-border, #333333);
 }
 
 .filter-header {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.8rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--dark-border, #333333);
 }
 
 .filter-header h3 {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1f1f1f;
+  color: var(--text-primary, #ffffff);
 }
 
 .filter-header svg {
-  color: #555;
+  color: var(--accent-primary, #d4c0a1);
   font-size: 1.1rem;
 }
 
 .filter-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.8rem;
 }
 
 .filter-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .filter-label {
   font-size: 0.95rem;
   font-weight: 500;
-  color: #333;
+  color: var(--text-secondary, #e0e0e0);
 }
 
-/* Контейнер для інпутів ціни */
 .price-inputs {
   display: flex;
   gap: 10px;
 }
 
-/* Інпути ціни */
 .price-input {
   flex: 1;
   min-width: 0;
-  padding: 10px 14px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  padding: 12px 16px;
+  border: 1px solid var(--dark-border, #333333);
+  border-radius: 4px;
   font-size: 0.95rem;
-  background-color: #f9f9f9;
-  color: #222;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  background-color: var(--dark-bg-tertiary, #252525);
+  color: var(--text-secondary, #e0e0e0);
+  transition: all var(--transition-fast, 0.2s ease);
 }
 
-/* При фокусі */
 .price-input:focus {
-  border-color: #888;
-  background-color: #fff;
+  border-color: var(--accent-primary, #d4c0a1);
+  background-color: var(--dark-bg-tertiary, #252525);
   outline: none;
+  box-shadow: 0 0 0 2px rgba(212, 192, 161, 0.2);
 }
 
-/* Вимикаємо стрілки для number input */
-/* Chrome, Safari, Edge, Opera */
 .price-input::-webkit-outer-spin-button,
 .price-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-/* Firefox */
 .price-input[type=number] {
   -moz-appearance: textfield;
 }
 
-/* Селекти */
 .filter-select {
-  width: 160px; /* фіксована ширина */
-  padding: 10px 14px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--dark-border, #333333);
+  border-radius: 4px;
   font-size: 0.95rem;
-  background-color: #f9f9f9;
-  color: #222;
+  background-color: var(--dark-bg-tertiary, #252525);
+  color: var(--text-secondary, #e0e0e0);
   cursor: pointer;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition: all var(--transition-fast, 0.2s ease);
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
 }
 
 .filter-select:focus {
-  border-color: #888;
-  background-color: #fff;
+  border-color: var(--accent-primary, #d4c0a1);
   outline: none;
+  box-shadow: 0 0 0 2px rgba(212, 192, 161, 0.2);
 }
 
-/* Чекбокси */
 .filter-checkbox {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .filter-checkbox input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: #333;
+  accent-color: var(--accent-primary, #d4c0a1);
   cursor: pointer;
+  border: 1px solid var(--dark-border, #333333);
+  background-color: var(--dark-bg-tertiary, #252525);
 }
 
 .filter-checkbox label {
   cursor: pointer;
   font-size: 0.95rem;
-  color: #333;
+  color: var(--text-secondary, #e0e0e0);
+  transition: color var(--transition-fast, 0.2s ease);
 }
 
-/* Кнопки */
+.filter-checkbox:hover label {
+  color: var(--text-primary, #ffffff);
+}
+
 .filter-actions {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 1rem;
+  gap: 12px;
+  margin-top: 1.5rem;
 }
 
 .filter-button,
 .reset-button {
-  padding: 12px;
+  padding: 14px;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all var(--transition-normal, 0.3s ease);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -147,32 +152,41 @@
 }
 
 .filter-button {
-  background-color: #222;
-  color: #fff;
+  background-color: var(--accent-primary, #d4c0a1);
+  color: var(--dark-bg-primary, #121212);
 }
 
 .filter-button:hover {
-  background-color: #111;
+  background-color: var(--accent-secondary, #c9b8a8);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md, 0 4px 8px rgba(0, 0, 0, 0.4));
 }
 
 .reset-button {
-  background-color: #f3f4f6;
-  color: #444;
-  border: 1px solid #e5e7eb;
+  background-color: var(--dark-bg-tertiary, #252525);
+  color: var(--text-secondary, #e0e0e0);
+  border: 1px solid var(--dark-border, #333333);
 }
 
 .reset-button:hover {
-  background-color: #e5e7eb;
-  color: #222;
+  background-color: var(--dark-surface, #2d2d2d);
+  color: var(--text-primary, #ffffff);
+  border-color: var(--accent-tertiary, #b8a99a);
 }
 
 .filter-button svg,
 .reset-button svg {
   font-size: 0.9rem;
-  opacity: 0.8;
+  opacity: 0.9;
+  transition: transform var(--transition-fast, 0.2s ease);
 }
 
-/* 📱 Адаптивність */
+.filter-button:hover svg,
+.reset-button:hover svg {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
 @media (max-width: 768px) {
   .price-inputs {
     flex-direction: column;

@@ -1,4 +1,3 @@
-// src/components/house/HouseList.jsx
 import React, { useState, useEffect } from 'react';
 import { houseService } from '../../services/houseService';
 import HouseCard from './HouseCard';

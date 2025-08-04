@@ -21,21 +21,20 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  VStack
+  VStack,
+  Tooltip
 } from '@chakra-ui/react';
 import { FaHome, FaList, FaInfoCircle, FaPhone, FaBars, FaTimes } from 'react-icons/fa';
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // Colors - оновлені для відповідності дизайну Solus
   const bgColor = useColorModeValue('white', 'gray.900');
   const borderColor = useColorModeValue('gray.100', 'gray.800');
   const textColor = useColorModeValue('gray.700', 'white');
   const hoverBgColor = useColorModeValue('gray.50', 'gray.800');
   const accentColor = useColorModeValue('brand.600', 'brand.400');
 
-  // Navigation items
   const navItems = [
     { name: 'Головна', path: '/', icon: FaHome },
     { name: 'Оголошення', path: '/houses', icon: FaList },
@@ -58,7 +57,6 @@ const Header = () => {
     >
       <Container maxW="100%" px={[4, 6, 8]}>
         <Flex h={20} alignItems="center" justifyContent="space-between">
-          {/* Logo */}
           <Link
             as={RouterLink}
             to="/"
@@ -74,7 +72,6 @@ const Header = () => {
             <Text>Продаж будинків</Text>
           </Link>
 
-          {/* Desktop Navigation */}
           <HStack spacing={10} alignItems="center" display={{ base: 'none', md: 'flex' }}>
             <HStack as="nav" spacing={8}>
               {navItems.map((item) => (
@@ -103,10 +100,10 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
+
             </HStack>
           </HStack>
 
-          {/* Mobile Navigation Button */}
           <IconButton
             display={{ base: 'flex', md: 'none' }}
             onClick={onOpen}
@@ -125,7 +122,6 @@ const Header = () => {
         </Flex>
       </Container>
 
-      {/* Mobile Navigation Drawer */}
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="xs">
         <DrawerOverlay backdropFilter="blur(2px)" />
         <DrawerContent bg={bgColor} boxShadow="xl">
@@ -170,6 +166,7 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
+
             </VStack>
           </DrawerBody>
         </DrawerContent>

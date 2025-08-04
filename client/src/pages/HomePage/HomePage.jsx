@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import { FaHome, FaSearchLocation, FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import {Link} from 'react-router-dom';
+import {FaHome, FaSearchLocation, FaPhoneAlt, FaMapMarkerAlt} from 'react-icons/fa';
+import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './HomePage.css';
 import L from 'leaflet';
@@ -23,7 +23,7 @@ const HomePage = () => {
 
             <section className="features-modern">
                 <div className="feature-item">
-                    <FaHome className="feature-icon" />
+                    <FaHome className="feature-icon"/>
                     <div>
                         <h3>Різноманіття вибору</h3>
                         <p>Будинки для будь-якого стилю та бюджету.</p>
@@ -31,7 +31,7 @@ const HomePage = () => {
                 </div>
 
                 <div className="feature-item">
-                    <FaSearchLocation className="feature-icon" />
+                    <FaSearchLocation className="feature-icon"/>
                     <div>
                         <h3>Інтуїтивний пошук</h3>
                         <p>Фільтри за ціною, площею, кімнатами, локацією.</p>
@@ -39,7 +39,7 @@ const HomePage = () => {
                 </div>
 
                 <div className="feature-item">
-                    <FaPhoneAlt className="feature-icon" />
+                    <FaPhoneAlt className="feature-icon"/>
                     <div>
                         <h3>Прямий контакт</h3>
                         <p>Спілкуйтеся напряму з продавцем без посередників.</p>
@@ -47,12 +47,12 @@ const HomePage = () => {
                 </div>
             </section>
 
-            <FeaturedHouses />
+            <FeaturedHouses/>
 
             <section className="map-section">
                 <div className="map-container">
                     <div className="map-header">
-                        <FaMapMarkerAlt className="map-icon" />
+                        <FaMapMarkerAlt className="map-icon"/>
                         <h2>Місце розташування</h2>
                         <p>Наші будинки розташовані поблизу Києва в зручному місці</p>
                     </div>
@@ -61,7 +61,7 @@ const HomePage = () => {
                         center={center}
                         zoom={10}
                         scrollWheelZoom={false}
-                        style={{ height: '500px', width: '100%' }}
+                        style={{height: '500px', width: '100%'}}
                     >
                         <TileLayer
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -79,7 +79,7 @@ const HomePage = () => {
                             })}
                         >
                             <Popup>
-                                Центр Києва
+                                Путрівка
                             </Popup>
                         </Marker>
                     </MapContainer>

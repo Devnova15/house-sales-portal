@@ -16,34 +16,34 @@ import {
     Divider,
     Flex,
     Icon,
-    RangeSlider,
-    RangeSliderTrack,
-    RangeSliderFilledTrack,
-    RangeSliderThumb,
-    Text,
     useColorModeValue,
     Collapse,
     useDisclosure,
     Badge
 } from '@chakra-ui/react';
 
+const initialFilters = {
+    priceMin: '',
+    priceMax: '',
+    rooms: '',
+    floors: '',
+    withRepair: false,
+    withFurniture: false
+};
+
+const floorOptions = ['1', '2', '3+'];
+
+
 const FilterPanel = ({ onFilterChange }) => {
-    const [filters, setFilters] = useState({
-        priceMin: '',
-        priceMax: '',
-        rooms: '',
-        floors: '',
-        withRepair: false,
-        withFurniture: false
-    });
+    const [filters, setFilters] = useState(initialFilters);
 
     const { isOpen, onToggle } = useDisclosure({ defaultIsOpen: true });
 
-    // Кольори
     const bgColor = useColorModeValue('white', 'gray.800');
     const borderColor = useColorModeValue('gray.200', 'gray.700');
     const headingBgColor = useColorModeValue('gray.50', 'gray.700');
     const accentColor = useColorModeValue('brand.600', 'brand.400');
+
 
     const handleChange = (name, value) => {
         setFilters(prev => ({
@@ -58,23 +58,12 @@ const FilterPanel = ({ onFilterChange }) => {
     };
 
     const handleReset = () => {
-        setFilters({
-            priceMin: '',
-            priceMax: '',
-            rooms: '',
-            floors: '',
-            withRepair: false,
-            withFurniture: false
-        });
+        setFilters(initialFilters);
         onFilterChange({});
     };
 
-    // Розширюємо варіанти поверховості
-    const floorOptions = ['1', '2', '3+'];
-
-    // Активні фільтри
-    const activeFiltersCount = Object.values(filters).filter(value => 
-        value !== '' && value !== false
+    const activeFiltersCount = Object.values(filters).filter(
+        value => value !== '' && value !== false
     ).length;
 
     return (
@@ -86,7 +75,7 @@ const FilterPanel = ({ onFilterChange }) => {
             borderColor={borderColor}
             overflow="hidden"
         >
-            <Flex 
+            <Flex
                 p={4} 
                 bg={headingBgColor} 
                 alignItems="center" 
@@ -109,9 +98,11 @@ const FilterPanel = ({ onFilterChange }) => {
             <Collapse in={isOpen} animateOpacity>
                 <Box as="form" onSubmit={handleSubmit} p={5}>
                     <VStack spacing={5} align="stretch">
+                        {/* Price range filter */}
                         <FormControl>
                             <FormLabel fontWeight="medium">Ціна ($)</FormLabel>
                             <HStack spacing={4}>
+                                {/* Minimum price input */}
                                 <InputGroup>
                                     <InputLeftElement pointerEvents="none" color="gray.400">
                                         $
@@ -124,6 +115,8 @@ const FilterPanel = ({ onFilterChange }) => {
                                         borderRadius="md"
                                     />
                                 </InputGroup>
+
+                                {/* Maximum price input */}
                                 <InputGroup>
                                     <InputLeftElement pointerEvents="none" color="gray.400">
                                         $
@@ -139,6 +132,7 @@ const FilterPanel = ({ onFilterChange }) => {
                             </HStack>
                         </FormControl>
 
+                        {/* Room count filter */}
                         <FormControl>
                             <FormLabel fontWeight="medium">Кількість кімнат</FormLabel>
                             <Select
@@ -156,6 +150,7 @@ const FilterPanel = ({ onFilterChange }) => {
                             </Select>
                         </FormControl>
 
+                        {/* Floor count filter */}
                         <FormControl>
                             <FormLabel fontWeight="medium">Поверховість</FormLabel>
                             <Select
@@ -175,7 +170,9 @@ const FilterPanel = ({ onFilterChange }) => {
 
                         <Divider />
 
+                        {/* Additional features checkboxes */}
                         <VStack align="start" spacing={3}>
+                            {/* Repair status checkbox */}
                             <Checkbox
                                 isChecked={filters.withRepair}
                                 onChange={(e) => handleChange('withRepair', e.target.checked)}
@@ -185,6 +182,7 @@ const FilterPanel = ({ onFilterChange }) => {
                                 З ремонтом
                             </Checkbox>
 
+                            {/* Furniture status checkbox */}
                             <Checkbox
                                 isChecked={filters.withFurniture}
                                 onChange={(e) => handleChange('withFurniture', e.target.checked)}
@@ -197,7 +195,9 @@ const FilterPanel = ({ onFilterChange }) => {
 
                         <Divider />
 
+                        {/* Action buttons */}
                         <HStack spacing={4}>
+                            {/* Search button */}
                             <Button
                                 type="submit"
                                 leftIcon={<FaSearch />}
@@ -208,6 +208,8 @@ const FilterPanel = ({ onFilterChange }) => {
                             >
                                 Пошук
                             </Button>
+
+                            {/* Reset button */}
                             <Button
                                 type="button"
                                 leftIcon={<FaUndo />}

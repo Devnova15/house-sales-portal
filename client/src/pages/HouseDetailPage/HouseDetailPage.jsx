@@ -1,37 +1,44 @@
-// src/pages/HouseDetailPage/HouseDetailPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { FaBed, FaBath, FaRulerCombined, FaTree, FaHome } from 'react-icons/fa';
+import { FaBed, FaBath, FaRulerCombined, FaTree, FaHome, FaChevronLeft, FaChevronRight, FaMapMarkerAlt } from 'react-icons/fa';
 import { houseService } from '../../services/houseService';
 import { processImagePath, processImages } from '../../utils/imageUtils';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import markerIconPng from 'leaflet/dist/images/marker-icon.png';
+import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
+import 'leaflet/dist/leaflet.css';
 import './HouseDetailPage.css';
 
 const HouseDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    // Состояния для отслеживания ошибок изображений
     const [mainImageError, setMainImageError] = useState(false);
     const [thumbnailErrors, setThumbnailErrors] = useState({});
     const [processedImages, setProcessedImages] = useState([]);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
-    // Получаем данные о доме с помощью React Query
+
+    const [mapCenter, setMapCenter] = useState( [50.202664892265766, 30.274876895590857]);
+
     const { data: house, isLoading, error } = useQuery({
         queryKey: ['house', id],
         queryFn: () => houseService.getHouseById(id)
     });
 
-    // Обработка путей к изображениям когда получены данные о доме
     useEffect(() => {
         if (house && house.images && Array.isArray(house.images)) {
             const processed = processImages(house.images);
             setProcessedImages(processed);
             console.log('Обработанные пути к изображениям:', processed);
         }
+
+        if (house && house.coordinates) {
+            setMapCenter(house.coordinates);
+        }
     }, [house]);
 
-    // Функция форматирования цены
     const formatPrice = (price) => {
         return price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     };
@@ -51,20 +58,27 @@ const HouseDetailPage = () => {
 
     const handleThumbnailClick = (index) => {
         setSelectedImageIndex(index);
-        setMainImageError(false); // Сбрасываем ошибку при смене изображения
+        setMainImageError(false);
     };
 
-    const handleDeleteHouse = async () => {
-        if (window.confirm('Ви впевнені, що хочете видалити цей будинок?')) {
-            try {
-                await houseService.deleteHouse(id);
-                navigate('/houses');
-            } catch (err) {
-                console.error('Помилка при видаленні будинку:', err);
-                alert('Не вдалося видалити будинок. Спробуйте пізніше.');
-            }
+    const handlePrevImage = () => {
+        if (processedImages.length > 0) {
+            setSelectedImageIndex((prevIndex) => 
+                prevIndex > 0 ? prevIndex - 1 : processedImages.length - 1
+            );
+            setMainImageError(false);
         }
     };
+
+    const handleNextImage = () => {
+        if (processedImages.length > 0) {
+            setSelectedImageIndex((prevIndex) => 
+                prevIndex < processedImages.length - 1 ? prevIndex + 1 : 0
+            );
+            setMainImageError(false);
+        }
+    };
+
 
     if (isLoading) {
         return <div className="loading-container">Завантаження інформації про будинок...</div>;
@@ -94,7 +108,6 @@ const HouseDetailPage = () => {
         contactInfo
     } = house;
 
-    // Определяем основное изображение с учетом ошибки
     const mainImage = !mainImageError && processedImages.length > 0
         ? processedImages[selectedImageIndex]
         : '/images/placeholder-house.jpg';
@@ -109,11 +122,25 @@ const HouseDetailPage = () => {
 
             <div className="house-gallery">
                 <div className="gallery-main">
+                    <button 
+                        className="gallery-nav-button prev-button" 
+                        onClick={handlePrevImage}
+                        aria-label="Попереднє зображення"
+                    >
+                        <FaChevronLeft />
+                    </button>
                     <img
                         src={mainImage}
                         alt={title}
                         onError={handleMainImageError}
                     />
+                    <button 
+                        className="gallery-nav-button next-button" 
+                        onClick={handleNextImage}
+                        aria-label="Наступне зображення"
+                    >
+                        <FaChevronRight />
+                    </button>
                 </div>
                 <div className="gallery-thumbnails">
                     {processedImages.map((image, index) => (
@@ -277,12 +304,44 @@ const HouseDetailPage = () => {
                         </div>
                     </section>
                 )}
+
+                <section className="house-map-section">
+                    <h2>Розташування будинка на карті</h2>
+                    <div className="map-container">
+                        <MapContainer
+                            center={mapCenter}
+                            zoom={13}
+                            scrollWheelZoom={false}
+                            style={{ height: '500px', width: '100%' }}
+                        >
+                            <TileLayer
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                attribution="&copy; OpenStreetMap contributors"
+                            />
+                            <Marker
+                                position={mapCenter}
+                                icon={new L.Icon({
+                                    iconUrl: markerIconPng,
+                                    shadowUrl: markerShadowPng,
+                                    iconSize: [25, 41],
+                                    iconAnchor: [12, 41],
+                                    popupAnchor: [1, -34],
+                                    shadowSize: [41, 41]
+                                })}
+                            >
+                                <Popup>
+                                    {title}<br />
+                                    {address}
+                                </Popup>
+                            </Marker>
+                        </MapContainer>
+                    </div>
+                </section>
             </div>
 
             <div className="house-actions">
                 <Link to="/houses" className="btn-secondary">Назад до списку</Link>
-                <Link to={`/admin/houses/edit/${id}`} className="btn-primary">Редагувати</Link>
-                <button onClick={handleDeleteHouse} className="btn-danger">Видалити</button>
+
             </div>
         </div>
     );

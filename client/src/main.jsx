@@ -6,25 +6,37 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import App from './App.jsx'
 import './index.css'
 import './reset.css'
+import './dark-theme.css'
 
-// Розширюємо тему Chakra UI для українського сайту продажу будинків
 const theme = extendTheme({
     colors: {
         brand: {
-            50: '#f0f9ff',
-            100: '#e0f2fe',
-            200: '#bae6fd',
-            300: '#7dd3fc',
-            400: '#38bdf8',
-            500: '#0ea5e9',
-            600: '#0284c7',
-            700: '#0369a1',
-            800: '#075985',
-            900: '#0c4a6e',
+            50: '#f0f0f0',
+            100: '#d4c0a1',
+            200: '#c9b8a8',
+            300: '#b8a99a',
+            400: '#a99b8c',
+            500: '#9a8d7e',
+            600: '#8b7e70',
+            700: '#7c7062',
+            800: '#6d6254',
+            900: '#5e5346',
         },
         accent: {
-            500: '#f59e0b',
-            600: '#d97706',
+            500: '#d4c0a1',
+            600: '#c9b8a8',
+        },
+        gray: {
+            50: '#f7f7f7',
+            100: '#e0e0e0',
+            200: '#c7c7c7',
+            300: '#a0a0a0',
+            400: '#787878',
+            500: '#666666',
+            600: '#4d4d4d',
+            700: '#333333',
+            800: '#1e1e1e',
+            900: '#121212',
         }
     },
     fonts: {
@@ -34,8 +46,8 @@ const theme = extendTheme({
     styles: {
         global: {
             body: {
-                bg: 'gray.50',
-                color: 'gray.800',
+                bg: 'gray.900',
+                color: 'gray.100',
             }
         }
     },
@@ -43,34 +55,61 @@ const theme = extendTheme({
         Button: {
             baseStyle: {
                 fontWeight: 'medium',
-                borderRadius: 'md',
+                borderRadius: 'sm',
             },
             variants: {
                 solid: {
-                    bg: 'brand.600',
-                    color: 'white',
+                    bg: 'brand.100',
+                    color: 'gray.900',
                     _hover: {
-                        bg: 'brand.700',
+                        bg: 'brand.200',
+                        transform: 'translateY(-2px)',
+                        boxShadow: 'md',
                     }
                 },
                 outline: {
-                    borderColor: 'brand.600',
-                    color: 'brand.600',
+                    borderColor: 'brand.100',
+                    color: 'brand.100',
+                    _hover: {
+                        bg: 'gray.800',
+                        transform: 'translateY(-2px)',
+                    }
+                },
+                ghost: {
+                    color: 'gray.100',
+                    _hover: {
+                        bg: 'gray.800',
+                        color: 'brand.100',
+                    }
                 }
             }
         },
         Card: {
             baseStyle: {
                 container: {
-                    borderRadius: 'xl',
+                    bg: 'gray.800',
+                    borderRadius: 'md',
                     overflow: 'hidden',
-                    boxShadow: 'lg',
+                    boxShadow: 'md',
+                    borderWidth: '1px',
+                    borderColor: 'gray.700',
                     transition: 'all 0.3s ease',
                     _hover: {
                         transform: 'translateY(-8px)',
                         boxShadow: 'xl',
+                        borderColor: 'brand.100',
                     }
                 }
+            }
+        },
+        Heading: {
+            baseStyle: {
+                color: 'gray.100',
+            }
+        },
+        Text: {
+            baseStyle: {
+                color: 'gray.200',
             }
         }
     }
