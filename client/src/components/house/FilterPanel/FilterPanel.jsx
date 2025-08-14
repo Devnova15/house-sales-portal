@@ -33,7 +33,6 @@ const initialFilters = {
 
 const floorOptions = ['1', '2', '3+'];
 
-
 const FilterPanel = ({ onFilterChange }) => {
     const [filters, setFilters] = useState(initialFilters);
 
@@ -43,7 +42,7 @@ const FilterPanel = ({ onFilterChange }) => {
     const borderColor = useColorModeValue('gray.200', 'gray.700');
     const headingBgColor = useColorModeValue('gray.50', 'gray.700');
     const accentColor = useColorModeValue('brand.600', 'brand.400');
-
+    const textColor = useColorModeValue('gray.800', 'gray.100'); // ТЕМНЕЕ ТЕКСТ
 
     const handleChange = (name, value) => {
         setFilters(prev => ({
@@ -69,6 +68,7 @@ const FilterPanel = ({ onFilterChange }) => {
     return (
         <Box
             bg={bgColor}
+            color={textColor} // <- применяется ко всему тексту внутри
             borderRadius="xl"
             boxShadow="md"
             borderWidth="1px"
@@ -76,16 +76,18 @@ const FilterPanel = ({ onFilterChange }) => {
             overflow="hidden"
         >
             <Flex
-                p={4} 
-                bg={headingBgColor} 
-                alignItems="center" 
+                p={4}
+                bg={headingBgColor}
+                alignItems="center"
                 justifyContent="space-between"
                 cursor="pointer"
                 onClick={onToggle}
             >
                 <Flex alignItems="center">
                     <Icon as={FaFilter} mr={3} color={accentColor} />
-                    <Heading size="md">Фільтри пошуку</Heading>
+                    <Heading size="md" color={textColor}>
+                        Фільтри пошуку
+                    </Heading>
                 </Flex>
 
                 {activeFiltersCount > 0 && (
@@ -100,9 +102,10 @@ const FilterPanel = ({ onFilterChange }) => {
                     <VStack spacing={5} align="stretch">
                         {/* Price range filter */}
                         <FormControl>
-                            <FormLabel fontWeight="medium">Ціна ($)</FormLabel>
+                            <FormLabel fontWeight="medium" color={textColor}>
+                                Ціна ($)
+                            </FormLabel>
                             <HStack spacing={4}>
-                                {/* Minimum price input */}
                                 <InputGroup>
                                     <InputLeftElement pointerEvents="none" color="gray.400">
                                         $
@@ -115,8 +118,6 @@ const FilterPanel = ({ onFilterChange }) => {
                                         borderRadius="md"
                                     />
                                 </InputGroup>
-
-                                {/* Maximum price input */}
                                 <InputGroup>
                                     <InputLeftElement pointerEvents="none" color="gray.400">
                                         $
@@ -134,7 +135,9 @@ const FilterPanel = ({ onFilterChange }) => {
 
                         {/* Room count filter */}
                         <FormControl>
-                            <FormLabel fontWeight="medium">Кількість кімнат</FormLabel>
+                            <FormLabel fontWeight="medium" color={textColor}>
+                                Кількість кімнат
+                            </FormLabel>
                             <Select
                                 placeholder="Всі варіанти"
                                 value={filters.rooms}
@@ -152,7 +155,9 @@ const FilterPanel = ({ onFilterChange }) => {
 
                         {/* Floor count filter */}
                         <FormControl>
-                            <FormLabel fontWeight="medium">Поверховість</FormLabel>
+                            <FormLabel fontWeight="medium" color={textColor}>
+                                Поверховість
+                            </FormLabel>
                             <Select
                                 placeholder="Всі варіанти"
                                 value={filters.floors}
@@ -172,7 +177,6 @@ const FilterPanel = ({ onFilterChange }) => {
 
                         {/* Additional features checkboxes */}
                         <VStack align="start" spacing={3}>
-                            {/* Repair status checkbox */}
                             <Checkbox
                                 isChecked={filters.withRepair}
                                 onChange={(e) => handleChange('withRepair', e.target.checked)}
@@ -181,8 +185,6 @@ const FilterPanel = ({ onFilterChange }) => {
                             >
                                 З ремонтом
                             </Checkbox>
-
-                            {/* Furniture status checkbox */}
                             <Checkbox
                                 isChecked={filters.withFurniture}
                                 onChange={(e) => handleChange('withFurniture', e.target.checked)}
@@ -197,7 +199,6 @@ const FilterPanel = ({ onFilterChange }) => {
 
                         {/* Action buttons */}
                         <HStack spacing={4}>
-                            {/* Search button */}
                             <Button
                                 type="submit"
                                 leftIcon={<FaSearch />}
@@ -208,8 +209,6 @@ const FilterPanel = ({ onFilterChange }) => {
                             >
                                 Пошук
                             </Button>
-
-                            {/* Reset button */}
                             <Button
                                 type="button"
                                 leftIcon={<FaUndo />}
