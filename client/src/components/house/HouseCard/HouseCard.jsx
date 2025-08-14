@@ -50,7 +50,8 @@ const HouseCard = ({ house }) => {
         hoverShadow: useColorModeValue('2xl', 'dark-lg'),
         textColor: useColorModeValue('gray.700', 'white'),
         mutedColor: useColorModeValue('gray.500', 'gray.400'),
-        accentColor: useColorModeValue('brand.500', 'brand.400')
+        accentColor: useColorModeValue('brand.500', 'brand.400'),
+        featureBg: useColorModeValue('gray.50', 'gray.700')
     };
 
     return (
@@ -186,7 +187,7 @@ const HouseCard = ({ house }) => {
                         {/* Bedrooms */}
                         <Flex 
                             align="center" 
-                            bg="gray.50" 
+                            bg={themeColors.featureBg} 
                             p={2} 
                             borderRadius="md" 
                             flex={1} 
@@ -202,7 +203,7 @@ const HouseCard = ({ house }) => {
                         {/* Bathrooms */}
                         <Flex 
                             align="center" 
-                            bg="gray.50" 
+                            bg={themeColors.featureBg} 
                             p={2} 
                             borderRadius="md" 
                             flex={1} 
@@ -218,7 +219,7 @@ const HouseCard = ({ house }) => {
                         {/* Area */}
                         <Flex 
                             align="center" 
-                            bg="gray.50" 
+                            bg={themeColors.featureBg} 
                             p={2} 
                             borderRadius="md" 
                             flex={1} 
