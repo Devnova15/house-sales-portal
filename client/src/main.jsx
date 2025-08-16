@@ -2,17 +2,13 @@ import 'leaflet/dist/leaflet.css';
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
-import { ChakraProvider, extendTheme, ColorModeScript } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import App from './App.jsx'
 import './index.css'
 import './reset.css'
 import './dark-theme.css'
 
 const theme = extendTheme({
-    config: {
-        initialColorMode: 'light',
-        useSystemColorMode: false,
-    },
     colors: {
         brand: {
             50: '#f0f0f0',
@@ -48,12 +44,12 @@ const theme = extendTheme({
         body: 'Inter, system-ui, sans-serif',
     },
     styles: {
-        global: (props) => ({
+        global: {
             body: {
-                bg: props.colorMode === 'dark' ? 'gray.900' : 'white',
-                color: props.colorMode === 'dark' ? 'gray.100' : 'gray.800',
+                bg: 'gray.900',
+                color: 'gray.100',
             }
-        })
+        }
     },
     components: {
         Button: {
@@ -121,7 +117,6 @@ const theme = extendTheme({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <ChakraProvider theme={theme}>
             <BrowserRouter>
                 <App />

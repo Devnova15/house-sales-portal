@@ -1,7 +1,6 @@
 import {Link} from 'react-router-dom';
 import {FaHome, FaSearchLocation, FaPhoneAlt, FaMapMarkerAlt} from 'react-icons/fa';
 import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
-import { Box, useColorModeValue } from '@chakra-ui/react';
 import 'leaflet/dist/leaflet.css';
 import './HomePage.css';
 import L from 'leaflet';
@@ -11,34 +10,16 @@ import FeaturedHouses from '../../components/house/FeaturedHouses';
 
 const HomePage = () => {
     const center = [50.202664892265766, 30.274876895590857];
-    
-    // Theme-aware overlay colors - lighter for light theme, darker for dark theme
-    const heroOverlayBg = useColorModeValue(
-        'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.5))',
-        'linear-gradient(to bottom, rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.95))'
-    );
 
     return (
         <>
-            <Box
-                className="hero-fullscreen"
-                _before={{
-                    content: '""',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    background: heroOverlayBg,
-                    zIndex: 1,
-                }}
-            >
+            <section className="hero-fullscreen">
                 <div className="hero-overlay">
                     <h1>Знайдіть будинок своєї мрії</h1>
                     <p>Ми пропонуємо великий вибір будинків на будь-який смак і бюджет.</p>
                     <Link to="/houses" className="hero-button">Переглянути оголошення</Link>
                 </div>
-            </Box>
+            </section>
 
             <section className="features-modern">
                 <div className="feature-item">
@@ -71,6 +52,7 @@ const HomePage = () => {
             <section className="map-section">
                 <div className="map-container">
                     <div className="map-header">
+                        <FaMapMarkerAlt className="map-icon"/>
                         <h2>Місце розташування</h2>
                         <p>Наші будинки розташовані поблизу Києва в зручному місці</p>
                     </div>

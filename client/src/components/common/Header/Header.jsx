@@ -12,7 +12,6 @@ import {
   MenuItem, 
   useDisclosure, 
   useColorModeValue,
-  useColorMode,
   Container,
   Text,
   Icon,
@@ -25,11 +24,10 @@ import {
   VStack,
   Tooltip
 } from '@chakra-ui/react';
-import { FaHome, FaList, FaInfoCircle, FaPhone, FaBars, FaTimes, FaMoon, FaSun } from 'react-icons/fa';
+import { FaHome, FaList, FaInfoCircle, FaPhone, FaBars, FaTimes } from 'react-icons/fa';
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { colorMode, toggleColorMode } = useColorMode();
 
   const bgColor = useColorModeValue('white', 'gray.900');
   const borderColor = useColorModeValue('gray.100', 'gray.800');
@@ -102,24 +100,8 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
+
             </HStack>
-            
-            <Tooltip label={colorMode === 'light' ? 'Темна тема' : 'Світла тема'} placement="bottom">
-              <IconButton
-                aria-label="Перемкнути тему"
-                icon={colorMode === 'light' ? <FaMoon /> : <FaSun />}
-                onClick={toggleColorMode}
-                variant="ghost"
-                size="md"
-                color={accentColor}
-                _hover={{
-                  bg: hoverBgColor,
-                  transform: 'scale(1.1)',
-                  transition: 'all 0.3s ease'
-                }}
-                transition="all 0.3s ease"
-              />
-            </Tooltip>
           </HStack>
 
           <IconButton
@@ -184,25 +166,7 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              
-              <Button
-                onClick={toggleColorMode}
-                variant="ghost"
-                size="lg"
-                leftIcon={colorMode === 'light' ? <FaMoon /> : <FaSun />}
-                color={accentColor}
-                _hover={{
-                  bg: hoverBgColor,
-                  transform: 'translateX(5px)',
-                  transition: 'all 0.3s ease'
-                }}
-                transition="all 0.3s ease"
-                justifyContent="flex-start"
-                px={3}
-                py={4}
-              >
-                {colorMode === 'light' ? 'Темна тема' : 'Світла тема'}
-              </Button>
+
             </VStack>
           </DrawerBody>
         </DrawerContent>
