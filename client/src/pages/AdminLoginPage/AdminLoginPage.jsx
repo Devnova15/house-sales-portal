@@ -5,8 +5,7 @@ import { ROUTES } from '../../constans/rotes';
 import './AdminLoginPage.css';
 import {QUERY} from "../../constans/query.js";
 import {sendRequest} from "../../utils/sendRequest.js";
-// const ADMIN_USERNAME = 'admin';
-// const ADMIN_PASSWORD = 'admin123';
+/
 
 const AdminLoginPage = () => {
     const [username, setUsername] = useState('');
@@ -17,9 +16,6 @@ const AdminLoginPage = () => {
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    // const isValidCredentials = (username, password) => {
-    //     return username === ADMIN_USERNAME && password === ADMIN_PASSWORD;
-    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
