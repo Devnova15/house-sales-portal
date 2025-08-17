@@ -1,0 +1,845 @@
+/* src/pages/HouseDetailPage/HouseDetailPage.css - Dark Theme */
+
+:root {
+  /* Dark theme colors */
+  --color-dark-blue: #d4c0a1;       /* warm beige (accent-primary) */
+  --color-light-blue: #c9b8a8;      /* powder beige (accent-secondary) */
+  --color-dark-gray: #e0e0e0;       /* light text (text-secondary) */
+  --color-gray: #a0a0a0;            /* muted text (text-muted) */
+  --color-light-gray: #252525;      /* dark bg tertiary */
+  --color-bg: #1e1e1e;              /* dark bg secondary */
+  --color-bg-primary: #121212;      /* dark bg primary */
+  --color-border: #333333;          /* dark border */
+  --font-primary: 'Inter', 'Segoe UI', sans-serif;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.5);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+.house-detail-page {
+  width: 100%;
+  margin: 0;
+  padding: 3rem 2rem 4rem;
+  font-family: var(--font-primary);
+  color: var(--color-dark-gray);
+  background-color: var(--color-bg-primary);
+  user-select: none;
+  overflow: hidden; /* Запобігаємо горизонтальному прокручуванню */
+}
+
+
+/* Змінюємо стиль хедера для кращого відображення всіх елементів */
+.house-detail-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2.5rem;
+  background-color: var(--color-bg);
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  border: 1px solid var(--color-border);
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  gap: 2rem;
+}
+
+.wishlist-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--color-light-gray);
+  color: var(--color-dark-gray);
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  white-space: nowrap;
+  min-height: 48px;
+}
+
+.wishlist-button:hover {
+  background: var(--color-bg);
+  border-color: var(--color-dark-blue);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.wishlist-button.active {
+  background: #dc3545;
+  border-color: #dc3545;
+  color: white;
+}
+
+.wishlist-button.active:hover {
+  background: #c82333;
+  border-color: #c82333;
+}
+
+.wishlist-button.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.wishlist-button .heart-icon {
+  font-size: 16px;
+  transition: transform var(--transition-fast);
+}
+
+.wishlist-button:hover .heart-icon {
+  transform: scale(1.1);
+}
+
+.wishlist-button.active .heart-icon {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .header-top {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .wishlist-button {
+    order: 2;
+    font-size: 12px;
+    padding: 10px 16px;
+  }
+}
+
+.house-detail-header h1 {
+  font-weight: 700;
+  font-size: 2.4rem;
+  color: var(--color-dark-gray);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Оновлений стиль для .house-price в HouseDetailPage.css */
+.house-price {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: black;
+  padding: 12px 28px;
+  border-radius: 8px;
+  display: inline-block;
+  margin: 1.2rem auto;
+  letter-spacing: 0.02em;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  transform: translateY(0);
+  transition: all var(--transition-normal);
+  z-index: 20;
+}
+
+.house-price:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  background: var(--color-light-gray);
+}
+
+.house-address {
+  font-size: 1.2rem;
+  color: var(--color-gray);
+  font-weight: 500;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: color var(--transition-fast);
+}
+
+/* Додаємо іконку до адреси */
+.house-address::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="%23d4c0a1" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: transform var(--transition-normal);
+}
+
+.house-address:hover {
+  color: var(--color-dark-gray);
+}
+
+.house-address:hover::before {
+  transform: translateY(-2px);
+}
+
+.house-gallery {
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  margin-bottom: 3rem;
+  background: var(--color-bg);
+  transition: all var(--transition-normal);
+  border: 1px solid var(--color-border);
+}
+
+.house-gallery:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-dark-blue);
+}
+
+.gallery-main {
+  width: 100%;
+  height: 600px; /* Increased height for larger image display */
+  background-color: var(--color-light-gray);
+  overflow: hidden;
+  border-bottom: 2px solid var(--color-dark-blue);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-main::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+  opacity: 0.3;
+  transition: opacity var(--transition-normal);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.house-gallery:hover .gallery-main::after {
+  opacity: 0.5;
+}
+
+.gallery-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Changed from cover to contain to show the full image */
+  transition: transform 0.6s ease-out, filter 0.6s ease;
+  will-change: transform;
+  cursor: zoom-in;
+  filter: brightness(0.9) contrast(1.1);
+  max-height: 100%;
+}
+
+.gallery-main img:hover {
+  transform: scale(1.05);
+  filter: brightness(0.95) contrast(1.15);
+}
+
+.gallery-thumbnails {
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  padding: 1rem 1.25rem;
+  background-color: var(--color-bg);
+  border-top: 2px solid var(--color-dark-blue);
+}
+
+.gallery-thumbnail {
+  flex: 0 0 auto;
+  width: 90px;
+  height: 70px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  opacity: 0.65;
+  border: 2px solid transparent;
+  transition: all var(--transition-normal);
+  overflow: hidden;
+}
+
+.gallery-thumbnail:hover {
+  opacity: 0.9;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.gallery-thumbnail.active {
+  opacity: 1;
+  border-color: var(--color-dark-blue);
+  box-shadow: var(--shadow-md);
+}
+
+.gallery-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+  pointer-events: none;
+  user-select: none;
+  filter: brightness(0.9);
+  transition: filter var(--transition-fast);
+}
+
+.gallery-thumbnail:hover img,
+.gallery-thumbnail.active img {
+  filter: brightness(1);
+}
+
+/* Navigation buttons for the gallery carousel */
+.gallery-nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--color-dark-blue);
+  color: var(--color-bg-primary);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all var(--transition-normal);
+  z-index: 10;
+  box-shadow: var(--shadow-md);
+}
+
+.gallery-nav-button:hover {
+  opacity: 1;
+  background-color: var(--color-light-blue);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: var(--shadow-lg);
+}
+
+.gallery-nav-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(212, 192, 161, 0.5), var(--shadow-md);
+}
+
+.prev-button {
+  left: 20px;
+}
+
+.next-button {
+  right: 20px;
+}
+
+.gallery-nav-button svg {
+  font-size: 1.5rem;
+}
+
+.house-content {
+  display: grid;
+  grid-template-columns: 2.4fr 1fr;
+  gap: 3rem;
+  color: var(--color-dark-gray);
+  margin-top: 3rem; /* Додаємо відступ зверху */
+  width: 100%; /* Забезпечуємо повну ширину */
+  overflow: visible; /* Запобігаємо обрізанню контенту */
+}
+
+section {
+  background-color: var(--color-bg);
+  padding: 2rem 2.2rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+  border: 1px solid var(--color-border);
+  position: relative;
+}
+
+section:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px);
+  border-color: var(--color-dark-blue);
+}
+
+section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--color-dark-gray);
+  border-bottom: 2px solid var(--color-dark-blue);
+  padding-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+  position: relative;
+}
+
+section h2::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background-color: var(--color-dark-blue);
+  transition: width var(--transition-normal);
+}
+
+section:hover h2::after {
+  width: 100px;
+}
+
+.house-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--color-light-gray);
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-dark-gray);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  border: 1px solid transparent;
+}
+
+.feature svg {
+  color: var(--color-dark-blue);
+  font-size: 1.3rem;
+  transition: all var(--transition-normal);
+}
+
+.feature:hover {
+  background-color: var(--color-bg);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-dark-blue);
+}
+
+.feature:hover svg {
+  color: var(--color-light-blue);
+  transform: scale(1.1);
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.5rem 2rem;
+  font-size: 1rem;
+  color: var(--color-gray);
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-left: 3px solid var(--color-dark-blue);
+  padding-left: 14px;
+  font-weight: 600;
+  user-select: text;
+  transition: all var(--transition-normal);
+  position: relative;
+}
+
+.detail-item:hover {
+  border-left-color: var(--color-light-blue);
+  transform: translateX(3px);
+}
+
+.detail-label {
+  font-size: 0.9rem;
+  color: var(--color-dark-gray);
+  font-weight: 700;
+  transition: color var(--transition-fast);
+}
+
+.detail-value {
+  font-weight: 500;
+  color: var(--color-gray);
+  transition: color var(--transition-fast);
+}
+
+.detail-item:hover .detail-label {
+  color: var(--color-dark-blue);
+}
+
+.detail-item:hover .detail-value {
+  color: var(--color-dark-gray);
+}
+
+.house-description p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--color-gray);
+  user-select: text;
+  transition: color var(--transition-normal);
+}
+
+.house-description:hover p {
+  color: var(--color-dark-gray);
+}
+
+.house-contact {
+  font-size: 1.05rem;
+  color: var(--color-gray);
+}
+
+.house-map-section {
+  grid-column: 1 / -1; /* Make the map section span the full width */
+  margin-top: 2rem;
+}
+
+.map-container {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-normal);
+}
+
+.map-container:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-dark-blue);
+}
+
+/* Ensure Leaflet controls are visible on dark background */
+.leaflet-control-zoom a {
+  color: #333;
+}
+
+.leaflet-popup-content-wrapper {
+  background-color: var(--color-bg);
+  color: var(--color-dark-gray);
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+}
+
+.leaflet-popup-tip {
+  background-color: var(--color-bg);
+}
+
+.contact-info > div {
+  margin-bottom: 0.9rem;
+  font-weight: 600;
+  color: var(--color-dark-blue);
+  user-select: text;
+  transition: all var(--transition-fast);
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: var(--color-light-gray);
+  border: 1px solid transparent;
+}
+
+.contact-info > div:hover {
+  color: var(--color-light-blue);
+  background-color: var(--color-bg);
+  border-color: var(--color-dark-blue);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.house-actions {
+  margin-top: 4rem;
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 2rem 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  padding: 14px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  min-width: 160px;
+  transition: all var(--transition-normal);
+  user-select: none;
+  box-shadow: var(--shadow-sm);
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after,
+.btn-secondary::after,
+.btn-danger::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.btn-primary:hover::after,
+.btn-secondary:hover::after,
+.btn-danger:hover::after {
+  transform: translateX(0);
+}
+
+.btn-primary {
+  background-color: var(--color-dark-blue);
+  color: var(--color-bg-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-light-blue);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  background-color: var(--color-bg);
+  color: var(--color-dark-blue);
+  border: 1px solid var(--color-dark-blue);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-light-gray);
+  color: var(--color-dark-gray);
+  border-color: var(--color-border);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-danger {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c53030;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Адаптивність */
+
+@media (max-width: 1200px) {
+  .house-detail-page {
+    padding: 2.5rem 1.5rem 3rem;
+  }
+
+  .house-content {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .house-detail-header {
+    margin-bottom: 2.5rem;
+    padding: 2rem;
+  }
+
+  .gallery-main {
+    height: 500px; /* Adjusted for medium screens */
+  }
+
+  section {
+    padding: 1.8rem 2rem;
+  }
+
+  section:hover {
+    transform: translateY(-3px);
+  }
+
+  .gallery-nav-button {
+    width: 45px;
+    height: 45px;
+  }
+
+  .gallery-nav-button svg {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .house-detail-page {
+    padding: 2rem 1.2rem 2.5rem;
+  }
+
+  .house-detail-header {
+    padding: 1.8rem;
+  }
+
+  .house-detail-header h1 {
+    font-size: 2.2rem;
+  }
+
+  .house-price {
+    font-size: 2rem;
+    padding: 10px 24px;
+  }
+
+  .gallery-main {
+    height: 400px; /* Adjusted for small screens but still larger than original */
+  }
+
+  .gallery-thumbnails {
+    gap: 10px;
+    padding: 0.9rem 1.1rem;
+  }
+
+  .gallery-thumbnail {
+    width: 80px;
+    height: 60px;
+  }
+
+  .feature {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+
+  .house-actions {
+    gap: 15px;
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger {
+    padding: 12px 24px;
+  }
+
+  .gallery-nav-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .gallery-nav-button svg {
+    font-size: 1.2rem;
+  }
+
+  .prev-button {
+    left: 15px;
+  }
+
+  .next-button {
+    right: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .house-detail-page {
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .house-detail-header {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .house-detail-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .house-price {
+    font-size: 1.6rem;
+    padding: 8px 20px;
+  }
+
+  .house-address {
+    font-size: 1.1rem;
+  }
+
+  .gallery-main {
+    height: 300px; /* Adjusted for very small screens but still larger than original */
+  }
+
+  .gallery-thumbnails {
+    gap: 8px;
+    padding: 0.8rem 1rem;
+  }
+
+  .gallery-thumbnail {
+    width: 65px;
+    height: 50px;
+  }
+
+  section {
+    padding: 1.5rem;
+  }
+
+  section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .house-features {
+    gap: 12px;
+  }
+
+  .feature {
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    gap: 8px;
+  }
+
+  .feature svg {
+    font-size: 1.1rem;
+  }
+
+  .details-grid {
+    gap: 1.2rem 1.5rem;
+  }
+
+  .house-description p {
+    font-size: 1rem;
+  }
+
+  .house-actions {
+    margin-top: 2.5rem;
+    gap: 12px;
+    padding: 1.2rem 0;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger {
+    width: 100%;
+    min-width: unset;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+
+  .gallery-nav-button {
+    width: 35px;
+    height: 35px;
+  }
+
+  .gallery-nav-button svg {
+    font-size: 1rem;
+  }
+
+  .prev-button {
+    left: 10px;
+  }
+
+  .next-button {
+    right: 10px;
+  }
+}

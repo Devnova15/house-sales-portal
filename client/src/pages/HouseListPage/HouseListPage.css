@@ -1,0 +1,159 @@
+.house-list-page {
+  width: 100%;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  background-color: var(--dark-bg-primary, #121212);
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.page-header::after {
+  content: '';
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background-color: var(--accent-primary, #d4c0a1);
+  border-radius: 1px;
+}
+
+.page-header h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--text-primary, #ffffff);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.page-subtitle {
+  font-size: 1.2rem;
+  color: var(--text-muted, #a0a0a0);
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.house-list-container {
+  display: flex;
+  gap: 3rem;
+  width: 100%;
+}
+
+.filter-sidebar {
+  flex: 0 0 320px;
+  background-color: var(--dark-bg-secondary, #1e1e1e);
+  border-radius: 8px;
+  box-shadow: var(--shadow-md, 0 4px 8px rgba(0, 0, 0, 0.4));
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+  overflow: hidden;
+  border: 1px solid var(--dark-border, #333333);
+}
+
+.houses-main {
+  flex: 1;
+}
+
+.houses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 2.5rem;
+}
+
+.loading, .error, .no-houses {
+  text-align: center;
+  padding: 5rem 2rem;
+  background-color: var(--dark-bg-secondary, #1e1e1e);
+  border-radius: 8px;
+  box-shadow: var(--shadow-md, 0 4px 8px rgba(0, 0, 0, 0.4));
+  border: 1px solid var(--dark-border, #333333);
+}
+
+.loading {
+  font-size: 1.2rem;
+  color: var(--text-secondary, #e0e0e0);
+}
+
+.loading::before {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 1.5rem;
+  border: 3px solid var(--dark-border, #333333);
+  border-top-color: var(--accent-primary, #d4c0a1);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error {
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.3);
+}
+
+.no-houses {
+  color: var(--text-muted, #a0a0a0);
+  font-size: 1.1rem;
+  padding: 6rem 2rem;
+  line-height: 1.6;
+}
+
+/* Адаптивність */
+@media (max-width: 1100px) {
+  .house-list-container {
+    flex-direction: column;
+  }
+
+  .filter-sidebar {
+    flex: none;
+    width: 100%;
+    margin-bottom: 2.5rem;
+    position: static;
+  }
+
+  .page-header h1 {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 2rem;
+  }
+
+  .houses-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.8rem;
+  }
+
+  .house-list-page {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .houses-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .page-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,118 @@
+/* Header.css - Dark theme */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+:root {
+    --header-bg: var(--dark-bg-primary, #121212);
+    --header-border: var(--dark-border, #333333);
+    --header-text: var(--text-secondary, #e0e0e0);
+    --header-hover: var(--accent-primary, #d4c0a1);
+    --header-active: var(--accent-secondary, #c9b8a8);
+}
+
+.modern-header {
+    background-color: var(--header-bg);
+    border-bottom: 1px solid var(--header-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 1.2rem 2rem;
+    font-family: 'Inter', sans-serif;
+    box-shadow: var(--shadow-md, 0 4px 8px rgba(0, 0, 0, 0.4));
+    width: 100%;
+}
+
+.modern-nav {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modern-logo {
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--text-primary, #ffffff);
+    letter-spacing: 0.5px;
+    transition: color var(--transition-fast, 0.2s ease);
+}
+
+.modern-logo:hover {
+    color: var(--header-hover);
+}
+
+.modern-links {
+    display: flex;
+    gap: 2.5rem;
+}
+
+.modern-link {
+    text-decoration: none;
+    color: var(--header-text);
+    font-weight: 400;
+    font-size: 1rem;
+    transition: all var(--transition-normal, 0.3s ease);
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.modern-link:hover {
+    color: var(--header-hover);
+}
+
+.modern-link::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: var(--header-hover);
+    transition: width var(--transition-normal, 0.3s ease);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.modern-link:hover::after {
+    width: 100%;
+}
+
+/* Mobile menu button */
+.menu-button {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--header-text);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color var(--transition-fast, 0.2s ease);
+}
+
+.menu-button:hover {
+    color: var(--header-hover);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .modern-links {
+        display: none;
+    }
+
+    .menu-button {
+        display: block;
+    }
+
+    .modern-nav.open .modern-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--header-bg);
+        padding: 1rem 2rem;
+        gap: 1rem;
+        border-bottom: 1px solid var(--header-border);
+        box-shadow: var(--shadow-md, 0 4px 8px rgba(0, 0, 0, 0.4));
+    }
+}

@@ -1,0 +1,146 @@
+# Dependencies
+/node_modules
+/client/node_modules
+/.pnp
+.pnp.js
+yarn.lock
+package-lock.json
+
+# Production
+/build
+/dist
+/client/build
+/client/dist
+.vite
+
+# Environment and Secrets
+.env
+.env.*
+.env.local
+.env.development
+.env.test
+.env.production
+/config/keys_dev.js
+/config/keys_prod.js
+/config/keys.js
+/config/security/*
+/config/private/*
+security.config.js
+permissions.config.js
+roles.config.js
+
+# Admin и конфиденциальные данные
+/admin/**
+/src/admin/**
+/client/src/admin/**
+/routes/admin/*
+!routes/admin/index.js
+/scripts/create-admin-user.js
+/scripts/*-admin-*.js
+/scripts/admin/*
+/models/Admin.js
+admin.*.js
+admin.config.*
+
+# Аутентификация и безопасность
+**/auth/*
+**/authentication/*
+/middleware/auth/*
+jwt.config.js
+auth.config.js
+**/credentials.*
+**/*.auth.*
+**/*.secret.*
+**/*.private.*
+**/tokens/*
+**/refresh-tokens/*
+
+# SSL сертификаты и ключи
+ssl/
+certificates/
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.cer
+*.csr
+
+# Database
+/data/db/*
+!/data/db/.gitkeep
+/data/users/*
+/data/customers/*
+/backup/*
+**/*.dump
+**/*.backup
+**/*.restore
+**/*.sql
+**/*.sqlite
+**/*.db
+
+# Uploads and Media
+/public/images/houses/*
+!/public/images/houses/.gitkeep
+/client/public/images/houses/*
+!/client/public/images/houses/.gitkeep
+/client/public/images/HomePageImages/*
+!/client/public/images/HomePageImages/.gitkeep
+/client/public/images/team/*
+!/client/public/images/team/.gitkeep
+
+# IDE
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+.vs
+.vscode-server
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+error.log
+debug.log
+combined.log
+
+# OS generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Testing and Coverage
+/coverage
+/client/coverage
+.nyc_output
+
+# Temporary files
+.temp/
+.tmp/
+.cache/
+*.swp
+*.swo
+**/*_temp.*
+**/*_backup.*
+.history/
+.metadata
+
+# Debug
+debug.log
+.eslintcache
+
+# Runtime data
+pids
+*.pid
+*.seed
+.lock-wscript
+.bash_history
+.zsh_history

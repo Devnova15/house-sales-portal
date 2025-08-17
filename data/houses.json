@@ -1,0 +1,1021 @@
+[
+  {
+    "title": "Будинок в сосновому лісі",
+    "price": 85000,
+    "address": "Путрівка,Київська область",
+    "description": "Продаж чудового будинку 110м2 на 6 сотках в сосновому лісі.Будинок розташований в гарному та розвинутому с.Путрівка поблизу м.Васильків та зручний виїзд на Одеську трасу.Має гарне планування на 3 окремих спальні, гардеробну, власну котельню та кухню з прекрасним виходом на простору терасу, де ви кожен день будите насолоджуватися співом пташок.До будинку підведені електрика 10КВ, власна свердловина, септик на 8КБ та опалення по всьому будинку.Поруч в пішій доступності знаходиться амбулаторій, аптека, школа (гімназія) НВК Путрівський, магазини та зупинка на Київ.",
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "area": 110,
+    "plotArea": 6,
+    "floors": 1,
+    "characteristics": {
+      "wallType": "Газоблок",
+      "wallInsulation": "Пінопласт",
+      "roofType": "Металочерепиця",
+      "bathroom": "Суміжний",
+      "heating": "Електро-котел",
+      "floorHeating": true
+    },
+    "condition": {
+      "withRepair": false,
+      "repairType": "Під чистову обробку",
+      "withFurniture": false,
+      "yearBuilt": 2024
+    },
+    "features": {
+      "hasGarage": false,
+      "hasGarden": true,
+      "hasBasement": false,
+      "hasTerrace": true
+    },
+    "location": {
+      "district": "",
+      "city": "Путрівка",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "infrastructure": {
+      "school": true,
+      "kindergarten": true,
+      "hospital": true,
+      "park": false,
+      "publicTransport": true,
+      "shopping": true,
+      "distance": {
+        "toCenter": 1,
+        "toSchool": 1,
+        "toTransport": 1
+      }
+    },
+    "communications": {
+      "sewerage": "Септик",
+      "electricity": true,
+      "water": "Свердловина",
+      "gas": false,
+      "internet": true
+    },
+    "images": [
+      "/images/houses/house_1/image1.jpg",
+      "/images/houses/house_1/image2.jpg",
+      "/images/houses/house_1/image3.jpg",
+      "/images/houses/house_1/image4.jpg",
+      "/images/houses/house_1/image5.jpg",
+      "/images/houses/house_1/image6.jpg",
+      "/images/houses/house_1/image7.jpg",
+      "/images/houses/house_1/image8.jpg",
+      "/images/houses/house_1/image9.jpg",
+      "/images/houses/house_1/image10.jpg",
+      "/images/houses/house_1/image11.jpg",
+      "/images/houses/house_1/image12.jpg",
+      "/images/houses/house_1/image13.jpg",
+      "/images/houses/house_1/image14.jpg"
+    ],
+    "contactInfo": {
+      "name": "Example",
+      "phone": "+380-XX-XXX-XX-XX",
+      "email": "example@gmail.com"
+    },
+    "status": "available",
+    "createdAt": "2024-05-12T10:00:00.000Z",
+    "updatedAt": "2024-05-12T10:00:00.000Z"
+  },
+
+
+
+  {
+    "title": "Будинок під ключ! Котедж повної готовності!",
+    "price": 155000,
+    "address": "Путрівка,Київська область",
+    "description": "Котедж площею 120м2, ділянка 7соток.Зроблено сучасний ремонт, тепла підлога, камін, нові меблі, техніка, підключено всі комунікації!Розташований в хорошому тихому місці села Путрівка, зручний підʼїзд.Інфраструктура села розвинута: школи, садочок, магазини, зручна транспортна розвʼязка.Запрошуємо на перегляд! Телефонуйте!",
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "area": 120,
+    "plotArea": 7,
+    "floors": 1,
+    "characteristics": {
+      "wallType": "Газоблок",
+      "wallInsulation": "Пінопласт",
+      "roofType": "Металочерепиця",
+      "bathroom": "Суміжний",
+      "heating": "Електро-котел",
+      "floorHeating": true
+    },
+    "condition": {
+      "withRepair": true,
+      "repairType": "Євроремонт",
+      "withFurniture": true,
+      "yearBuilt": 2025
+    },
+    "features": {
+      "hasGarage": false,
+      "hasGarden": true,
+      "hasBasement": false,
+      "hasTerrace": true
+    },
+    "location": {
+      "district": "",
+      "city": "Путрівка",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "infrastructure": {
+      "school": true,
+      "kindergarten": true,
+      "hospital": true,
+      "park": false,
+      "publicTransport": true,
+      "shopping": true,
+      "distance": {
+        "toCenter": 1,
+        "toSchool": 1,
+        "toTransport": 1
+      }
+    },
+    "communications": {
+      "sewerage": "Септик",
+      "electricity": true,
+      "water": "Свердловина",
+      "gas": false,
+      "internet": true
+    },
+    "images": [
+      "/images/houses/house_2/image1.jpg",
+      "/images/houses/house_2/image2.jpg",
+      "/images/houses/house_2/image3.jpg",
+      "/images/houses/house_2/image4.jpg",
+      "/images/houses/house_2/image5.jpg",
+      "/images/houses/house_2/image6.jpg",
+      "/images/houses/house_2/image7.jpg",
+      "/images/houses/house_2/image8.jpg",
+      "/images/houses/house_2/image9.jpg",
+      "/images/houses/house_2/image10.jpg",
+      "/images/houses/house_2/image11.jpg",
+      "/images/houses/house_2/image12.jpg",
+      "/images/houses/house_2/image13.jpg",
+      "/images/houses/house_2/image14.jpg",
+      "/images/houses/house_2/image15.jpg",
+      "/images/houses/house_2/image16.jpg",
+      "/images/houses/house_2/image17.jpg"
+    ],
+    "contactInfo": {
+      "name": "Example",
+      "phone": "+380-XX-XXX-XX-XX",
+      "email": "example@gmail.com"
+    },
+    "status": "available",
+    "createdAt": "2024-05-12T10:00:00.000Z",
+    "updatedAt": "2024-05-12T10:00:00.000Z"
+  },
+
+
+
+
+  {
+    "title": "Котедж 100м2 на 5 сот за гарною ціною",
+    "price": 58000,
+    "address": "Путрівка,Київська область",
+    "description": "Продаж чудового будинку 100м2 на 5 сотках поруч з новою школою НВК Путрівський.Будинок розташований в гарному та розвинутому с.Крячки поблизу м.Васильків та зручний виїзд на Одеську трасу.Має гарне планування на 3 окремих спальні, гардеробну, власну котельню та кухню з прекрасним виходом на простору терасу, де ви кожен день будите насолоджуватися співом пташок.До будинку підведені електрика 10КВ, власна свердловина, септик на 8КБ.Поруч в пішій доступності знаходиться амбулаторій, аптека, школа (гімназія) НВК Путрівський, магазини та зупинка на Київ.",
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "area": 100,
+    "plotArea": 5,
+    "floors": 1,
+    "characteristics": {
+      "wallType": "Газоблок",
+      "wallInsulation": "Пінопласт",
+      "roofType": "Металочерепиця",
+      "bathroom": "Суміжний",
+      "heating": "Електро-котел",
+      "floorHeating": true
+    },
+    "condition": {
+      "withRepair": false,
+      "repairType": "Під чистову обробку",
+      "withFurniture": false,
+      "yearBuilt": 2024
+    },
+    "features": {
+      "hasGarage": false,
+      "hasGarden": false,
+      "hasBasement": false,
+      "hasTerrace": true
+    },
+    "location": {
+      "district": "",
+      "city": "Путрівка",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "infrastructure": {
+      "school": true,
+      "kindergarten": true,
+      "hospital": true,
+      "park": false,
+      "publicTransport": true,
+      "shopping": true,
+      "distance": {
+        "toCenter": 1,
+        "toSchool": 1,
+        "toTransport": 1
+      }
+    },
+    "communications": {
+      "sewerage": "Септик",
+      "electricity": true,
+      "water": "Свердловина",
+      "gas": false,
+      "internet": true
+    },
+    "images": [
+      "/images/houses/house_3/image1.jpg",
+      "/images/houses/house_3/image2.jpg",
+      "/images/houses/house_3/image3.jpg",
+      "/images/houses/house_3/image4.jpg",
+      "/images/houses/house_3/image5.jpg",
+      "/images/houses/house_3/image6.jpg",
+      "/images/houses/house_3/image7.jpg",
+      "/images/houses/house_3/image8.jpg",
+      "/images/houses/house_3/image9.jpg",
+      "/images/houses/house_3/image10.jpg",
+      "/images/houses/house_3/image11.jpg"
+    ],
+    "contactInfo": {
+      "name": "Example",
+      "phone": "+380-XX-XXX-XX-XX",
+      "email": "example@gmail.com"
+    },
+    "status": "available",
+    "createdAt": "2024-05-12T10:00:00.000Z",
+    "updatedAt": "2024-05-12T10:00:00.000Z"
+  },
+
+
+
+
+  {
+    "title": "Коттедж 200м² на 15 сот з видом на ліс",
+    "price": 130000,
+    "address": "Путрівка,Київська область",
+    "description": "Пропонується для вашої сім‘ї будинок 200м2 комфорт-класу з вітражними вікнами та видом на сосновий ліс.Якщо ви шукаєте тихе затишне місце серед природи та в пішій доступності до всієї інфраструктури , тоді це будинок, який будувався саме для вас!Спокійний район та авторський проект з великими терасами заворожують з першого разу.Ділянка 15 соток, де ви зможите розмістити ще окрему зону барбекю та басейн.Місцерозташування с.Березенщина Васильківського р-ну. Гарне та розвинуте село, з двух сторін місто Васильків, в 1,5 км Одеська траса та 22км до Києва.Є своя гімназія НВК Путрівський, магазини, аптека, амбулаторій, 2 охоронні компаніі та постійний маршрут на Київ.Чекаємо вас на перегляд будинку вашої мріі.",
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "area": 200,
+    "plotArea": 15,
+    "floors": 2,
+    "characteristics": {
+      "wallType": "Газоблок",
+      "wallInsulation": "Пінопласт",
+      "roofType": "Металочерепиця",
+      "bathroom": "Суміжний",
+      "heating": "Електро-котел",
+      "floorHeating": true
+    },
+    "condition": {
+      "withRepair": false,
+      "repairType": "Під чистову обробку",
+      "withFurniture": false,
+      "yearBuilt": 2024
+    },
+    "features": {
+      "hasGarage": false,
+      "hasGarden": true,
+      "hasBasement": false,
+      "hasTerrace": true
+    },
+    "location": {
+      "district": "",
+      "city": "Путрівка",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "infrastructure": {
+      "school": true,
+      "kindergarten": true,
+      "hospital": true,
+      "park": false,
+      "publicTransport": true,
+      "shopping": true,
+      "distance": {
+        "toCenter": 1,
+        "toSchool": 1,
+        "toTransport": 1
+      }
+    },
+    "communications": {
+      "sewerage": "Септик",
+      "electricity": true,
+      "water": "Свердловина",
+      "gas": false,
+      "internet": true
+    },
+    "images": [
+      "/images/houses/house_4/image1.jpg",
+      "/images/houses/house_4/image2.jpg",
+      "/images/houses/house_4/image3.jpg",
+      "/images/houses/house_4/image4.jpg",
+      "/images/houses/house_4/image5.jpg",
+      "/images/houses/house_4/image6.jpg",
+      "/images/houses/house_4/image7.jpg",
+      "/images/houses/house_4/image8.jpg",
+      "/images/houses/house_4/image9.jpg",
+      "/images/houses/house_4/image10.jpg",
+      "/images/houses/house_4/image11.jpg",
+      "/images/houses/house_4/image12.jpg",
+      "/images/houses/house_4/image13.jpg",
+      "/images/houses/house_4/image14.jpg",
+      "/images/houses/house_4/image15.jpg",
+      "/images/houses/house_4/image16.jpg",
+      "/images/houses/house_4/image17.jpg",
+      "/images/houses/house_4/image18.jpg",
+      "/images/houses/house_4/image19.jpg",
+      "/images/houses/house_4/image20.jpg"
+    ],
+    "contactInfo": {
+      "name": "Example",
+      "phone": "+380-XX-XXX-XX-XX",
+      "email": "example@gmail.com"
+    },
+    "status": "available",
+    "createdAt": "2024-05-12T10:00:00.000Z",
+    "updatedAt": "2024-05-12T10:00:00.000Z"
+  },
+
+
+
+
+  {
+    "title": "Шикарний котедж у сосновому лісі",
+    "price": 129000,
+    "address": "Путрівка,Київська область",
+    "description": "Шикарний сосновий ліс лише за 22 км від КП Одеської траси, с.Путрівка Васильківського району. До містечка веде чудова асфальтована дорога – 1,5 км від траси і Ви у своєму впорядкованому та красивому селищі! Котедж 180кв.м у повноцінних 2 поверхах на ділянці 6 сотках з шикарними соснами та додатковим ландшафтним дизайном. У будинку 4 просторі спальні, 2 санвузол і гардеробна, велика вітальня-їдальня-кухня з вітражними вікнами і комфортабельною терасою, паркомісце на 2 автомобілі. У будинок заведені всі комунікації, дорогі вітражні склопакети, що ламінують.Опалення та тепла підлога по всьому будинку.По периметру всієї вулиці та окремо кожного будинку зовнішнє освітлення.Будинок оточений сосновим лісом з усіх боків – неймовірна тиша та повітря. Будинок дуже світлий, завдяки великій кількості вітражних вікон, комфортабельна тераса з чудовим краєвидом на ліс – і все це за 15 хвилин їзди від КП Києва.",
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "area": 180,
+    "plotArea": 6,
+    "floors": 2,
+    "characteristics": {
+      "wallType": "Газоблок",
+      "wallInsulation": "Пінопласт",
+      "roofType": "Металочерепиця",
+      "bathroom": "Суміжний",
+      "heating": "Електро-котел",
+      "floorHeating": true
+    },
+    "condition": {
+      "withRepair": false,
+      "repairType": "Під чистову обробку",
+      "withFurniture": false,
+      "yearBuilt": 2024
+    },
+    "features": {
+      "hasGarage": false,
+      "hasGarden": true,
+      "hasBasement": false,
+      "hasTerrace": true
+    },
+    "location": {
+      "district": "",
+      "city": "Путрівка",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "infrastructure": {
+      "school": true,
+      "kindergarten": true,
+      "hospital": true,
+      "park": false,
+      "publicTransport": true,
+      "shopping": true,
+      "distance": {
+        "toCenter": 1,
+        "toSchool": 1,
+        "toTransport": 1
+      }
+    },
+    "communications": {
+      "sewerage": "Септик",
+      "electricity": true,
+      "water": "Свердловина",
+      "gas": false,
+      "internet": true
+    },
+    "images": [
+      "/images/houses/house_5/image1.jpg",
+      "/images/houses/house_5/image2.jpg",
+      "/images/houses/house_5/image3.jpg",
+      "/images/houses/house_5/image4.jpg",
+      "/images/houses/house_5/image5.jpg",
+      "/images/houses/house_5/image6.jpg",
+      "/images/houses/house_5/image7.jpg",
+      "/images/houses/house_5/image8.jpg",
+      "/images/houses/house_5/image9.jpg",
+      "/images/houses/house_5/image10.jpg",
+      "/images/houses/house_5/image11.jpg",
+      "/images/houses/house_5/image12.jpg",
+      "/images/houses/house_5/image13.jpg",
+      "/images/houses/house_5/image14.jpg",
+      "/images/houses/house_5/image15.jpg",
+      "/images/houses/house_5/image16.jpg",
+      "/images/houses/house_5/image17.jpg",
+      "/images/houses/house_5/image18.jpg",
+      "/images/houses/house_5/image19.jpg",
+      "/images/houses/house_5/image20.jpg",
+      "/images/houses/house_5/image21.jpg",
+      "/images/houses/house_5/image22.jpg"
+    ],
+    "contactInfo": {
+      "name": "Example",
+      "phone": "+380-XX-XXX-XX-XX",
+      "email": "example@gmail.com"
+    },
+    "status": "available",
+    "createdAt": "2024-05-12T10:00:00.000Z",
+    "updatedAt": "2024-05-12T10:00:00.000Z"
+  },
+
+
+
+  {
+    "title": "Будинок з ремонтом",
+    "price": 100000,
+    "address": "Путрівка,Київська область",
+    "description": "Будинок знаходиться в с Путрівка Васильківський р-н. біля лісу. 19 км. до Києва. По Одесській трасі.Побудова 2024 року Ремонт 2025 року,Будинок має:кухню-студію, 3 окремі кімнати бойлерна, ванна кімната, асвальтована дорога, забор парко місце для авто , скважена 54 м., септик, всі фасадні роботи зроблені, участок рівний.Тепла підлога по всьому будинку.Будинок дуже теплий, вмонтована кухня Дуже гарні сусіди, будинки навкруги нові, Поряд школа",
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "area": 100,
+    "plotArea": 5,
+    "floors": 1,
+    "characteristics": {
+      "wallType": "Газоблок",
+      "wallInsulation": "Пінопласт",
+      "roofType": "Металочерепиця",
+      "bathroom": "Суміжний",
+      "heating": "Електро-котел",
+      "floorHeating": true
+    },
+    "condition": {
+      "withRepair": true,
+      "repairType": "Євроремонт",
+      "withFurniture": true,
+      "yearBuilt": 2024
+    },
+    "features": {
+      "hasGarage": false,
+      "hasGarden": true,
+      "hasBasement": false,
+      "hasTerrace": true
+    },
+    "location": {
+      "district": "",
+      "city": "Путрівка",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "infrastructure": {
+      "school": true,
+      "kindergarten": true,
+      "hospital": true,
+      "park": false,
+      "publicTransport": true,
+      "shopping": true,
+      "distance": {
+        "toCenter": 1,
+        "toSchool": 1,
+        "toTransport": 1
+      }
+    },
+    "communications": {
+      "sewerage": "Септик",
+      "electricity": true,
+      "water": "Свердловина",
+      "gas": false,
+      "internet": true
+    },
+    "images": [
+      "/images/houses/house_6/image1.jpg",
+      "/images/houses/house_6/image2.jpg",
+      "/images/houses/house_6/image3.jpg",
+      "/images/houses/house_6/image4.jpg",
+      "/images/houses/house_6/image5.jpg",
+      "/images/houses/house_6/image6.jpg",
+      "/images/houses/house_6/image7.jpg"
+    ],
+    "contactInfo": {
+      "name": "Example",
+      "phone": "+380-XX-XXX-XX-XX",
+      "email": "example@gmail.com"
+    },
+    "status": "available",
+    "createdAt": "2024-05-12T10:00:00.000Z",
+    "updatedAt": "2024-05-12T10:00:00.000Z"
+  },
+
+
+  {
+    "title": "Будинок 85м²",
+    "price": 55000,
+    "address": "Путрівка,Київська область",
+    "description": "Продаж будинку в с.Путрівка Будинок розташований на ділянці площею 5 соток. Має 3 окремі кімнати, санвузол, топкову, кухню-студію.Усередині будинок під чистове оздоблення. Електрика заведена та розведена по будинку.Наявні свердловина та септик.",
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "area": 85,
+    "plotArea": 5,
+    "floors": 1,
+    "characteristics": {
+      "wallType": "Газоблок",
+      "wallInsulation": "Пінопласт",
+      "roofType": "Металочерепиця",
+      "bathroom": "Суміжний",
+      "heating": "Електро-котел",
+      "floorHeating": true
+    },
+    "condition": {
+      "withRepair": false,
+      "repairType": "Під чистову обробку",
+      "withFurniture": false,
+      "yearBuilt": 2023
+    },
+    "features": {
+      "hasGarage": false,
+      "hasGarden": true,
+      "hasBasement": false,
+      "hasTerrace": true
+    },
+    "location": {
+      "district": "",
+      "city": "Путрівка",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "infrastructure": {
+      "school": true,
+      "kindergarten": true,
+      "hospital": true,
+      "park": false,
+      "publicTransport": true,
+      "shopping": true,
+      "distance": {
+        "toCenter": 1,
+        "toSchool": 1,
+        "toTransport": 1
+      }
+    },
+    "communications": {
+      "sewerage": "Септик",
+      "electricity": true,
+      "water": "Свердловина",
+      "gas": false,
+      "internet": true
+    },
+    "images": [
+      "/images/houses/house_7/image1.jpg",
+      "/images/houses/house_7/image2.jpg",
+      "/images/houses/house_7/image3.jpg",
+      "/images/houses/house_7/image4.jpg",
+      "/images/houses/house_7/image5.jpg",
+      "/images/houses/house_7/image6.jpg",
+      "/images/houses/house_7/image7.jpg"
+    ],
+    "contactInfo": {
+      "name": "Example",
+      "phone": "+380-XX-XXX-XX-XX",
+      "email": "example@gmail.com"
+    },
+    "status": "available",
+    "createdAt": "2024-05-12T10:00:00.000Z",
+    "updatedAt": "2024-05-12T10:00:00.000Z"
+  },
+
+
+
+  {
+    "title": "Сучасний будинок площею 90м²",
+    "price": 60000,
+    "address": "Путрівка,Київська область",
+    "description": "Продається котедж площею 90 кв.м на ділянці 5 сот в Путровка/Крячки. Побудований з, газоблоку, утеплення 10 см пінопласт, світло 10 кВт 3 фази, свердловина, вигрібна яма. Хороша підʼїзна дорога, забудоване місце поруч з лісовим масивом. У будинку 3 кімнати, кухня-вітальня з виходом на терасу, с/в, котельня, ел.проводка, машинна штукатурка стін.",
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "area": 90,
+    "plotArea": 5,
+    "floors": 1,
+    "characteristics": {
+      "wallType": "Газоблок",
+      "wallInsulation": "Пінопласт",
+      "roofType": "Металочерепиця",
+      "bathroom": "Суміжний",
+      "heating": "Електро-котел",
+      "floorHeating": true
+    },
+    "condition": {
+      "withRepair": false,
+      "repairType": "Під чистову обробку",
+      "withFurniture": false,
+      "yearBuilt": 2024
+    },
+    "features": {
+      "hasGarage": false,
+      "hasGarden": false,
+      "hasBasement": false,
+      "hasTerrace": true
+    },
+    "location": {
+      "district": "",
+      "city": "Путрівка",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "infrastructure": {
+      "school": true,
+      "kindergarten": true,
+      "hospital": true,
+      "park": false,
+      "publicTransport": true,
+      "shopping": true,
+      "distance": {
+        "toCenter": 1,
+        "toSchool": 1,
+        "toTransport": 1
+      }
+    },
+    "communications": {
+      "sewerage": "Септик",
+      "electricity": true,
+      "water": "Свердловина",
+      "gas": false,
+      "internet": true
+    },
+    "images": [
+      "/images/houses/house_8/image1.jpg",
+      "/images/houses/house_8/image2.jpg",
+      "/images/houses/house_8/image3.jpg",
+      "/images/houses/house_8/image4.jpg",
+      "/images/houses/house_8/image5.jpg",
+      "/images/houses/house_8/image6.jpg",
+      "/images/houses/house_8/image7.jpg",
+      "/images/houses/house_8/image8.jpg",
+      "/images/houses/house_8/image9.jpg"
+    ],
+    "contactInfo": {
+      "name": "Example",
+      "phone": "+380-XX-XXX-XX-XX",
+      "email": "example@gmail.com"
+    },
+    "status": "available",
+    "createdAt": "2024-05-12T10:00:00.000Z",
+    "updatedAt": "2024-05-12T10:00:00.000Z"
+  },
+
+
+
+  {
+    "title": "Одноповерховий сучасний будинок",
+    "price": 63000,
+    "address": "Путрівка,Київська область",
+    "description": "Затишний одноповерховий будинок під чистове оздобленняПропонується до продажу одноповерховий будинок загальною площею 100 м², розташований на земельній ділянці 7,5 соток.Планування: кухня-студія з виходом на терасу три окремі спальні кімнати санвузол коридор топкова (господарське приміщення) У будинку виконано розведення електрики, заведено воду. Свердловина — 50 м, септик, електрика — 10 кВт. Інфраструктура:Зручна транспортна розв'язка — всього 2 км до Одеської траси.У пішій доступності — школа, дитячий садок, магазин.",
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "area": 100,
+    "plotArea": 7.5,
+    "floors": 1,
+    "characteristics": {
+      "wallType": "Газоблок",
+      "wallInsulation": "Пінопласт",
+      "roofType": "Металочерепиця",
+      "bathroom": "Суміжний",
+      "heating": "Електро-котел",
+      "floorHeating": true
+    },
+    "condition": {
+      "withRepair": false,
+      "repairType": "Під чистову обробку",
+      "withFurniture": false,
+      "yearBuilt": 2024
+    },
+    "features": {
+      "hasGarage": false,
+      "hasGarden": true,
+      "hasBasement": false,
+      "hasTerrace": true
+    },
+    "location": {
+      "district": "",
+      "city": "Путрівка",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "infrastructure": {
+      "school": true,
+      "kindergarten": true,
+      "hospital": true,
+      "park": false,
+      "publicTransport": true,
+      "shopping": true,
+      "distance": {
+        "toCenter": 1,
+        "toSchool": 1,
+        "toTransport": 1
+      }
+    },
+    "communications": {
+      "sewerage": "Септик",
+      "electricity": true,
+      "water": "Свердловина",
+      "gas": false,
+      "internet": true
+    },
+    "images": [
+      "/images/houses/house_9/image1.jpg",
+      "/images/houses/house_9/image2.jpg",
+      "/images/houses/house_9/image3.jpg",
+      "/images/houses/house_9/image4.jpg",
+      "/images/houses/house_9/image5.jpg",
+      "/images/houses/house_9/image6.jpg",
+      "/images/houses/house_9/image7.jpg",
+      "/images/houses/house_9/image8.jpg",
+      "/images/houses/house_9/image9.jpg",
+      "/images/houses/house_9/image10.jpg"
+    ],
+    "contactInfo": {
+      "name": "Example",
+      "phone": "+380-XX-XXX-XX-XX",
+      "email": "example@gmail.com"
+    },
+    "status": "available",
+    "createdAt": "2024-05-12T10:00:00.000Z",
+    "updatedAt": "2024-05-12T10:00:00.000Z"
+  },
+
+
+
+
+  {
+    "title": "Продаж будинку в с.Путрівка з опаленням",
+    "price": 90000,
+    "address": "Путрівка,Київська область",
+    "description": "Продаж будинку в с. Путрівка з опаленням. Площа — 115 м², земельна ділянка — 5 соток. Забір по всьому периметру. У будинку три кімнати, кухня-студія з виведеним димарем для каміна, гардеробна. Електрика — 10 кВт, власна свердловина, септик — 8 кубів. Встановлено теплу підлогу, електрокотел, сантехніку, електрика розведена по всьому будинку. Зручний та швидкий виїзд до Одеської траси. Поруч — Глеваха та Васильків.",
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "area": 115,
+    "plotArea": 5,
+    "floors": 1,
+    "characteristics": {
+      "wallType": "Газоблок",
+      "wallInsulation": "Пінопласт",
+      "roofType": "Металочерепиця",
+      "bathroom": "Суміжний",
+      "heating": "Електро-котел",
+      "floorHeating": true
+    },
+    "condition": {
+      "withRepair": false,
+      "repairType": "Під чистову обробку",
+      "withFurniture": false,
+      "yearBuilt": 2025
+    },
+    "features": {
+      "hasGarage": false,
+      "hasGarden": true,
+      "hasBasement": false,
+      "hasTerrace": true
+    },
+    "location": {
+      "district": "",
+      "city": "Путрівка",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "infrastructure": {
+      "school": true,
+      "kindergarten": true,
+      "hospital": true,
+      "park": false,
+      "publicTransport": true,
+      "shopping": true,
+      "distance": {
+        "toCenter": 1,
+        "toSchool": 1,
+        "toTransport": 1
+      }
+    },
+    "communications": {
+      "sewerage": "Септик",
+      "electricity": true,
+      "water": "Свердловина",
+      "gas": false,
+      "internet": true
+    },
+    "images": [
+      "/images/houses/house_10/image1.jpg",
+      "/images/houses/house_10/image2.jpg",
+      "/images/houses/house_10/image3.jpg",
+      "/images/houses/house_10/image4.jpg",
+      "/images/houses/house_10/image5.jpg",
+      "/images/houses/house_10/image6.jpg",
+      "/images/houses/house_10/image7.jpg",
+      "/images/houses/house_10/image8.jpg",
+      "/images/houses/house_10/image9.jpg",
+      "/images/houses/house_10/image10.jpg",
+      "/images/houses/house_10/image11.jpg",
+      "/images/houses/house_10/image12.jpg",
+      "/images/houses/house_10/image13.jpg",
+      "/images/houses/house_10/image14.jpg",
+      "/images/houses/house_10/image15.jpg",
+      "/images/houses/house_10/image16.jpg",
+      "/images/houses/house_10/image17.jpg",
+      "/images/houses/house_10/image18.jpg",
+      "/images/houses/house_10/image19.jpg"
+    ],
+    "contactInfo": {
+      "name": "Example",
+      "phone": "+380-XX-XXX-XX-XX",
+      "email": "example@gmail.com"
+    },
+    "status": "available",
+    "createdAt": "2024-05-12T10:00:00.000Z",
+    "updatedAt": "2024-05-12T10:00:00.000Z"
+  },
+
+
+
+
+
+  {
+    "title": "Сучасний котедж Путрівка Сосновий ліс",
+    "price": 72000,
+    "address": "Путрівка,Київська область",
+    "description": "Сучасний будинок в сосновому лісі Васильків/Путрівка, площа 110 кВ.м, ділянка 6 сот. Побудований з газоблоку 30 см, утеплення 10 см пінопласт, огороджений парканом. Світло 12 кВ г, свердловина, вигрібна яма. Три кімнати, кухня/вітальня, с/в, котельня, гардеробна. Вихід на терасу. Нова сучасна забудова, до зупинки на Київ 500 м, до асфальту 200 м.",
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "area": 110,
+    "plotArea": 6,
+    "floors": 1,
+    "characteristics": {
+      "wallType": "Газоблок",
+      "wallInsulation": "Пінопласт",
+      "roofType": "Металочерепиця",
+      "bathroom": "Суміжний",
+      "heating": "Електро-котел",
+      "floorHeating": true
+    },
+    "condition": {
+      "withRepair": false,
+      "repairType": "Під чистову обробку",
+      "withFurniture": false,
+      "yearBuilt": 2024
+    },
+    "features": {
+      "hasGarage": false,
+      "hasGarden": true,
+      "hasBasement": false,
+      "hasTerrace": true
+    },
+    "location": {
+      "district": "",
+      "city": "Путрівка",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "infrastructure": {
+      "school": true,
+      "kindergarten": true,
+      "hospital": true,
+      "park": false,
+      "publicTransport": true,
+      "shopping": true,
+      "distance": {
+        "toCenter": 1,
+        "toSchool": 1,
+        "toTransport": 1
+      }
+    },
+    "communications": {
+      "sewerage": "Септик",
+      "electricity": true,
+      "water": "Свердловина",
+      "gas": false,
+      "internet": true
+    },
+    "images": [
+      "/images/houses/house_11/image1.jpg",
+      "/images/houses/house_11/image2.jpg"
+    ],
+    "contactInfo": {
+      "name": "Example",
+      "phone": "+380-XX-XXX-XX-XX",
+      "email": "example@gmail.com"
+    },
+    "status": "available",
+    "createdAt": "2024-05-12T10:00:00.000Z",
+    "updatedAt": "2024-05-12T10:00:00.000Z"
+  },
+
+
+
+
+
+  {
+    "title": "Котедж в сосновому лісі ",
+    "price": 128000,
+    "address": "Путрівка,Київська область",
+    "description": "Новий котедж в сучасній житловій забудові в сосновому лісі, с.Путрівка, площа 160 кВ.м, ділянка 6 сот, огороджений парканом. Побудований з газоблоку, утеплювач 10 см, панельні перекриття, тепла підлога, електрична проводка розведена, машинна штукатурка стін. На першому поверсі кімната, кухня-вітальня, зал, с/в. На другому- три кімнати, гардеробна, с/в. Світло 3 фази, свердловина, вигрібна яма. Гарне тверде покриття до будинку.",
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "area": 160,
+    "plotArea": 6,
+    "floors": 2,
+    "characteristics": {
+      "wallType": "Газоблок",
+      "wallInsulation": "Пінопласт",
+      "roofType": "Металочерепиця",
+      "bathroom": "Суміжний",
+      "heating": "Електро-котел",
+      "floorHeating": true
+    },
+    "condition": {
+      "withRepair": false,
+      "repairType": "Під чистову обробку",
+      "withFurniture": false,
+      "yearBuilt": 2024
+    },
+    "features": {
+      "hasGarage": false,
+      "hasGarden": true,
+      "hasBasement": false,
+      "hasTerrace": true
+    },
+    "location": {
+      "district": "",
+      "city": "Путрівка",
+      "coordinates": {
+        "lat": 0,
+        "lng": 0
+      }
+    },
+    "infrastructure": {
+      "school": true,
+      "kindergarten": true,
+      "hospital": true,
+      "park": false,
+      "publicTransport": true,
+      "shopping": true,
+      "distance": {
+        "toCenter": 1,
+        "toSchool": 1,
+        "toTransport": 1
+      }
+    },
+    "communications": {
+      "sewerage": "Септик",
+      "electricity": true,
+      "water": "Свердловина",
+      "gas": false,
+      "internet": true
+    },
+    "images": [
+      "/images/houses/house_12/image1.jpg",
+      "/images/houses/house_12/image2.jpg",
+      "/images/houses/house_12/image3.jpg",
+      "/images/houses/house_12/image4.jpg",
+      "/images/houses/house_12/image5.jpg",
+      "/images/houses/house_12/image6.jpg",
+      "/images/houses/house_12/image7.jpg",
+      "/images/houses/house_12/image8.jpg",
+      "/images/houses/house_12/image9.jpg",
+      "/images/houses/house_12/image10.jpg",
+      "/images/houses/house_12/image11.jpg",
+      "/images/houses/house_12/image12.jpg",
+      "/images/houses/house_12/image13.jpg"
+    ],
+    "contactInfo": {
+      "name": "Example",
+      "phone": "+380-XX-XXX-XX-XX",
+      "email": "example@gmail.com"
+    },
+    "status": "available",
+    "createdAt": "2024-05-12T10:00:00.000Z",
+    "updatedAt": "2024-05-12T10:00:00.000Z"
+  }
+]

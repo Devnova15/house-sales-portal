@@ -1,0 +1,57 @@
+.house-list-container {
+    display: flex;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.house-list-sidebar {
+    flex: 0 0 300px;
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.house-list-content {
+    flex: 1;
+}
+
+.house-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.loading, .error, .no-houses {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+}
+
+.loading {
+    color: #2196F3;
+}
+
+.error {
+    color: #F44336;
+}
+
+.no-houses {
+    color: #757575;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .house-list-container {
+        flex-direction: column;
+    }
+
+    .house-list-sidebar {
+        flex: none;
+        width: 100%;
+    }
+}
