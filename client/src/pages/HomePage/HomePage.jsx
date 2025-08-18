@@ -52,7 +52,6 @@ const HomePage = () => {
             <section className="map-section">
                 <div className="map-container">
                     <div className="map-header">
-                        <FaMapMarkerAlt className="map-icon"/>
                         <h2>Місце розташування</h2>
                         <p>Наші будинки розташовані поблизу Києва в зручному місці</p>
                     </div>

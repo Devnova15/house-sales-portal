@@ -245,23 +245,6 @@
     border-radius: 1px;
 }
 
-.map-icon {
-    font-size: 3rem;
-    color: var(--accent-primary, #d4c0a1);
-    margin-bottom: 1.5rem;
-    display: inline-block;
-    background: rgba(212, 192, 161, 0.1);
-    padding: 1.5rem;
-    border-radius: 50%;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    transition: all var(--transition-normal, 0.3s ease);
-}
-
-.map-header:hover .map-icon {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    color: var(--accent-secondary, #c9b8a8);
-}
 
 .map-header h2 {
     font-size: 2.5rem;

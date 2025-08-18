@@ -5,7 +5,7 @@ import { ROUTES } from '../../constans/rotes';
 import './AdminLoginPage.css';
 import {QUERY} from "../../constans/query.js";
 import {sendRequest} from "../../utils/sendRequest.js";
-/
+
 
 const AdminLoginPage = () => {
     const [username, setUsername] = useState('');
