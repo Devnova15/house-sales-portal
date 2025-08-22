@@ -1,19 +1,31 @@
 import { Outlet } from 'react-router-dom';
+import { Box } from '@chakra-ui/react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import './Layout.css';
 
 const Layout = () => {
     return (
-        <>
+        <Box
+            display="flex"
+            flexDirection="column"
+            minHeight="100vh"
+            bg="gray.50"
+        >
             <Header />
-            <main className="main">
-                <div className="container">
+
+            <Box
+                as="main"
+                flex="1"
+                width="100%"
+                minHeight="calc(100vh - 160px)"
+            >
+                <Box width="100%" height="100%">
                     <Outlet />
-                </div>
-            </main>
+                </Box>
+            </Box>
+
             <Footer />
-        </>
+        </Box>
     );
 };
 

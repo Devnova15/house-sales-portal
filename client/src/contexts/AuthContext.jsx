@@ -18,15 +18,15 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const checkToken = async () => {
             const storedToken = localStorage.getItem(ADMIN_TOKEN_KEY);
-            
+
             if (storedToken) {
                 try {
                     // Add token to axios headers
                     axios.defaults.headers.common['Authorization'] = storedToken;
-                    
+
                     // Verify token by getting user data
                     const response = await axios.get(QUERY.ADMIN.ME);
-                    
+
                     if (response.data && response.data.isAdmin) {
                         setUser(response.data);
                         setToken(storedToken);
@@ -43,10 +43,10 @@ export const AuthProvider = ({ children }) => {
                     delete axios.defaults.headers.common['Authorization'];
                 }
             }
-            
+
             setLoading(false);
         };
-        
+
         checkToken();
     }, []);
 

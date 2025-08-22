@@ -1,6 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import {
+    Box,
+    VStack,
+    HStack,
+    Heading,
+    FormControl,
+    FormLabel,
+    Input,
+    Textarea,
+    Checkbox,
+    Select,
+    Button,
+    Alert,
+    AlertIcon,
+    Image,
+    SimpleGrid,
+    Text,
+    Tabs,
+    TabList,
+    TabPanels,
+    Tab,
+    TabPanel,
+    useBreakpointValue,
+    IconButton,
+    Flex,
+    Divider,
+} from '@chakra-ui/react';
 import { houseService } from '../../services/houseService';
-import './AddHouseForm.css';
 
 const AddHouseForm = ({ houseToEdit = null, onFormSubmit = null }) => {
     const isEditMode = !!houseToEdit;
@@ -73,17 +99,20 @@ const AddHouseForm = ({ houseToEdit = null, onFormSubmit = null }) => {
 
     const [uploadedImages, setUploadedImages] = useState([]);
     const [formStatus, setFormStatus] = useState({ message: '', type: '' });
-    const [activeSection, setActiveSection] = useState('basic');
+
+    // Responsive values
+    const gridColumns = useBreakpointValue({ base: 1, md: 2, lg: 3 });
+    const tabOrientation = useBreakpointValue({ base: 'horizontal', md: 'horizontal' });
+    const tabVariant = useBreakpointValue({ base: 'soft-rounded', md: 'enclosed' });
 
     // Initialize form data with house data when in edit mode
     useEffect(() => {
         if (houseToEdit) {
             setFormData(houseToEdit);
 
-            // If there are images, create preview URLs
             if (houseToEdit.images && houseToEdit.images.length > 0) {
                 const images = houseToEdit.images.map(imagePath => ({
-                    file: null, // We don't have the file object for existing images
+                    file: null,
                     preview: imagePath,
                     path: imagePath
                 }));
@@ -95,7 +124,6 @@ const AddHouseForm = ({ houseToEdit = null, onFormSubmit = null }) => {
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
 
-        // Process the value based on input type
         const processValue = (val) => {
             if (type === 'checkbox') return checked;
             if (type === 'number') return val === '' ? '' : Number(val);
@@ -104,7 +132,6 @@ const AddHouseForm = ({ houseToEdit = null, onFormSubmit = null }) => {
 
         if (name.includes('.')) {
             if (name.includes('[')) {
-                // Handle nested fields like infrastructure.distance[toCenter]
                 const matches = name.match(/([^.]+)\.([^[]+)\[([^\]]+)\]/);
                 if (matches && matches.length === 4) {
                     const [_, section, subsection, field] = matches;
@@ -147,62 +174,46 @@ const AddHouseForm = ({ houseToEdit = null, onFormSubmit = null }) => {
         const files = Array.from(e.target.files);
         if (files.length === 0) return;
 
-        // Set loading state
         setFormStatus({ message: 'Uploading images...', type: 'info' });
 
         try {
-            // Determine the house ID to use
-            // If we're editing an existing house, use its _id
-            // Otherwise, use the MongoDB ObjectId format (24 hex characters)
-            const houseId = isEditMode && houseToEdit._id 
-                ? houseToEdit._id 
-                : 'default'; // Use 'default' for new houses until they're saved
+            const houseId = isEditMode && houseToEdit._id ? houseToEdit._id : 'default';
 
-            // Create preview URLs for display
             const newImages = files.map(file => ({
                 file,
                 preview: URL.createObjectURL(file),
-                // Temporary path, will be updated after upload
                 path: `/images/houses/${houseId}/${file.name}`
             }));
 
-            // Update UI with previews
             setUploadedImages(prev => [...prev, ...newImages]);
 
-            // Upload the files to the server
             const response = await houseService.uploadImages(files, houseId);
 
-            // Update the paths with the actual paths returned from the server
             const updatedImages = newImages.map((img, index) => ({
                 ...img,
                 path: response.filePaths[index]
             }));
 
-            // Update the state with the actual paths
             setUploadedImages(prev => {
-                // Replace the temporary images with the updated ones
                 const filtered = prev.filter(img => !newImages.includes(img));
                 return [...filtered, ...updatedImages];
             });
 
-            // Update the form data with the actual paths
             setFormData(prev => ({
                 ...prev,
                 images: [...prev.images.filter(path => !newImages.map(img => img.path).includes(path)), ...response.filePaths]
             }));
 
-            // Show success message
             setFormStatus({ message: 'Images uploaded successfully!', type: 'success' });
 
-            // Clear the message after 3 seconds
             setTimeout(() => {
                 setFormStatus({ message: '', type: '' });
             }, 3000);
         } catch (error) {
             console.error('Error uploading images:', error);
-            setFormStatus({ 
-                message: `Error uploading images: ${error.response?.data?.message || error.message}`, 
-                type: 'error' 
+            setFormStatus({
+                message: `Error uploading images: ${error.response?.data?.message || error.message}`,
+                type: 'error'
             });
         }
     };
@@ -223,8 +234,7 @@ const AddHouseForm = ({ houseToEdit = null, onFormSubmit = null }) => {
         e.preventDefault();
         setFormStatus({ message: '', type: '' });
 
-        // Validate form data
-        if (!formData.title || !formData.price || !formData.address || 
+        if (!formData.title || !formData.price || !formData.address ||
             !formData.description || !formData.bedrooms || !formData.bathrooms || !formData.area) {
             setFormStatus({
                 message: 'Please fill in all required fields (title, price, address, description, bedrooms, bathrooms, area)',
@@ -234,112 +244,106 @@ const AddHouseForm = ({ houseToEdit = null, onFormSubmit = null }) => {
         }
 
         try {
-            // Add or update timestamps
             const now = new Date().toISOString();
             const completeFormData = {
                 ...formData,
                 updatedAt: now
             };
 
-            // If creating a new house, add createdAt timestamp
             if (!isEditMode) {
                 completeFormData.createdAt = now;
             }
 
             let result;
 
-            // Either update existing house or create a new one
             if (isEditMode) {
                 result = await houseService.updateHouse(houseToEdit._id, completeFormData);
-                console.log('House updated successfully:', result);
-
                 setFormStatus({
                     message: 'House data updated successfully!',
                     type: 'success'
                 });
             } else {
                 result = await houseService.createHouse(completeFormData);
-                console.log('House added successfully:', result);
-
                 setFormStatus({
                     message: 'House data added successfully to the database!',
                     type: 'success'
                 });
             }
 
-            // Call the onFormSubmit callback if provided
             if (onFormSubmit) {
                 onFormSubmit(result);
             }
 
-            // Reset form
-            setFormData({
-                title: '',
-                price: '',
-                address: '',
-                description: '',
-                bedrooms: '',
-                bathrooms: '',
-                area: '',
-                plotArea: '',
-                floors: '',
-                characteristics: {
-                    wallType: '',
-                    wallInsulation: '',
-                    roofType: '',
-                    bathroom: '',
-                    heating: '',
-                    floorHeating: false
-                },
-                condition: {
-                    withRepair: false,
-                    repairType: '',
-                    withFurniture: false,
-                    yearBuilt: new Date().getFullYear()
-                },
-                features: {
-                    hasGarage: false,
-                    hasGarden: false,
-                    hasBasement: false,
-                    hasTerrace: false
-                },
-                location: {
-                    district: '',
-                    city: '',
-                    coordinates: {
-                        lat: 0,
-                        lng: 0
-                    }
-                },
-                infrastructure: {
-                    school: false,
-                    kindergarten: false,
-                    hospital: false,
-                    park: false,
-                    publicTransport: false,
-                    shopping: false,
-                    distance: {
-                        toCenter: '',
-                        toSchool: '',
-                        toTransport: ''
-                    }
-                },
-                communications: {
-                    sewerage: '',
-                    electricity: false,
-                    water: '',
-                    gas: false,
-                    internet: false
-                },
-                images: [],
-                contactInfo: {
-                    name: '',
-                    phone: '',
-                    email: ''
-                },
-                status: 'available'
-            });
-            setUploadedImages([]);
+            // Reset form if not in edit mode
+            if (!isEditMode) {
+                setFormData({
+                    title: '',
+                    price: '',
+                    address: '',
+                    description: '',
+                    bedrooms: '',
+                    bathrooms: '',
+                    area: '',
+                    plotArea: '',
+                    floors: '',
+                    characteristics: {
+                        wallType: '',
+                        wallInsulation: '',
+                        roofType: '',
+                        bathroom: '',
+                        heating: '',
+                        floorHeating: false
+                    },
+                    condition: {
+                        withRepair: false,
+                        repairType: '',
+                        withFurniture: false,
+                        yearBuilt: new Date().getFullYear()
+                    },
+                    features: {
+                        hasGarage: false,
+                        hasGarden: false,
+                        hasBasement: false,
+                        hasTerrace: false
+                    },
+                    location: {
+                        district: '',
+                        city: '',
+                        coordinates: {
+                            lat: 0,
+                            lng: 0
+                        }
+                    },
+                    infrastructure: {
+                        school: false,
+                        kindergarten: false,
+                        hospital: false,
+                        park: false,
+                        publicTransport: false,
+                        shopping: false,
+                        distance: {
+                            toCenter: '',
+                            toSchool: '',
+                            toTransport: ''
+                        }
+                    },
+                    communications: {
+                        sewerage: '',
+                        electricity: false,
+                        water: '',
+                        gas: false,
+                        internet: false
+                    },
+                    images: [],
+                    contactInfo: {
+                        name: '',
+                        phone: '',
+                        email: ''
+                    },
+                    status: 'available'
+                });
+                setUploadedImages([]);
+            }
         } catch (error) {
             console.error('Error adding house:', error);
             setFormStatus({
@@ -350,683 +354,1275 @@ const AddHouseForm = ({ houseToEdit = null, onFormSubmit = null }) => {
     };
 
     return (
-        <div className="add-house-form-container">
-            <h3>{isEditMode ? 'Edit House' : 'Add New House'}</h3>
-            <div className="form-navigation">
-                <button 
-                    className={`nav-button ${activeSection === 'basic' ? 'active' : ''}`}
-                    onClick={() => setActiveSection('basic')}
+        <Box
+            bg="white"
+            p={{ base: 6, md: 8 }}
+            borderRadius="xl"
+            boxShadow="lg"
+            transition="all 0.3s ease"
+            _hover={{ boxShadow: "xl" }}
+        >
+            <Heading size="lg" color="#111111" mb={6} fontWeight="600">
+                {isEditMode ? 'Edit House' : 'Add New House'}
+            </Heading>
+
+            <Tabs variant={tabVariant} colorScheme="orange" orientation={tabOrientation}>
+                <TabList
+                    overflowX="auto"
+                    overflowY="hidden"
+                    sx={{
+                        '&::-webkit-scrollbar': {
+                            height: '4px',
+                        },
+                        '&::-webkit-scrollbar-track': {
+                            background: 'gray.100',
+                        },
+                        '&::-webkit-scrollbar-thumb': {
+                            background: '#F5A623',
+                            borderRadius: '4px',
+                        },
+                    }}
                 >
-                    Basic Info
-                </button>
-                <button 
-                    className={`nav-button ${activeSection === 'details' ? 'active' : ''}`}
-                    onClick={() => setActiveSection('details')}
-                >
-                    Property Details
-                </button>
-                <button 
-                    className={`nav-button ${activeSection === 'features' ? 'active' : ''}`}
-                    onClick={() => setActiveSection('features')}
-                >
-                    Features
-                </button>
-                <button 
-                    className={`nav-button ${activeSection === 'location' ? 'active' : ''}`}
-                    onClick={() => setActiveSection('location')}
-                >
-                    Location
-                </button>
-                <button 
-                    className={`nav-button ${activeSection === 'images' ? 'active' : ''}`}
-                    onClick={() => setActiveSection('images')}
-                >
-                    Images
-                </button>
-                <button 
-                    className={`nav-button ${activeSection === 'contact' ? 'active' : ''}`}
-                    onClick={() => setActiveSection('contact')}
-                >
-                    Contact
-                </button>
-            </div>
+                    <Tab
+                        _selected={{
+                            color: 'white',
+                            bg: '#F5A623',
+                        }}
+                        _hover={{
+                            bg: '#F6AB5E',
+                            color: 'white',
+                        }}
+                        borderRadius="lg"
+                        transition="all 0.3s ease"
+                        whiteSpace="nowrap"
+                    >
+                        Basic Info
+                    </Tab>
+                    <Tab
+                        _selected={{
+                            color: 'white',
+                            bg: '#F5A623',
+                        }}
+                        _hover={{
+                            bg: '#F6AB5E',
+                            color: 'white',
+                        }}
+                        borderRadius="lg"
+                        transition="all 0.3s ease"
+                        whiteSpace="nowrap"
+                    >
+                        Property Details
+                    </Tab>
+                    <Tab
+                        _selected={{
+                            color: 'white',
+                            bg: '#F5A623',
+                        }}
+                        _hover={{
+                            bg: '#F6AB5E',
+                            color: 'white',
+                        }}
+                        borderRadius="lg"
+                        transition="all 0.3s ease"
+                        whiteSpace="nowrap"
+                    >
+                        Features
+                    </Tab>
+                    <Tab
+                        _selected={{
+                            color: 'white',
+                            bg: '#F5A623',
+                        }}
+                        _hover={{
+                            bg: '#F6AB5E',
+                            color: 'white',
+                        }}
+                        borderRadius="lg"
+                        transition="all 0.3s ease"
+                        whiteSpace="nowrap"
+                    >
+                        Location
+                    </Tab>
+                    <Tab
+                        _selected={{
+                            color: 'white',
+                            bg: '#F5A623',
+                        }}
+                        _hover={{
+                            bg: '#F6AB5E',
+                            color: 'white',
+                        }}
+                        borderRadius="lg"
+                        transition="all 0.3s ease"
+                        whiteSpace="nowrap"
+                    >
+                        Images
+                    </Tab>
+                    <Tab
+                        _selected={{
+                            color: 'white',
+                            bg: '#F5A623',
+                        }}
+                        _hover={{
+                            bg: '#F6AB5E',
+                            color: 'white',
+                        }}
+                        borderRadius="lg"
+                        transition="all 0.3s ease"
+                        whiteSpace="nowrap"
+                    >
+                        Contact
+                    </Tab>
+                </TabList>
 
-            <form onSubmit={handleSubmit} className="house-form">
-                {/* Basic Information Section */}
-                {activeSection === 'basic' && (
-                    <div className="form-section">
-                        <h4>Basic Information</h4>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="title">Title*</label>
-                                <input
-                                    type="text"
-                                    id="title"
-                                    name="title"
-                                    value={formData.title}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="price">Price (€)*</label>
-                                <input
-                                    type="number"
-                                    id="price"
-                                    name="price"
-                                    value={formData.price}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="address">Address*</label>
-                            <input
-                                type="text"
-                                id="address"
-                                name="address"
-                                value={formData.address}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="description">Description*</label>
-                            <textarea
-                                id="description"
-                                name="description"
-                                rows="5"
-                                value={formData.description}
-                                onChange={handleChange}
-                                required
-                            ></textarea>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="bedrooms">Bedrooms*</label>
-                                <input
-                                    type="number"
-                                    id="bedrooms"
-                                    name="bedrooms"
-                                    value={formData.bedrooms}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="bathrooms">Bathrooms*</label>
-                                <input
-                                    type="number"
-                                    id="bathrooms"
-                                    name="bathrooms"
-                                    value={formData.bathrooms}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="floors">Floors</label>
-                                <input
-                                    type="number"
-                                    id="floors"
-                                    name="floors"
-                                    value={formData.floors}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="area">Area (m²)*</label>
-                                <input
-                                    type="number"
-                                    id="area"
-                                    name="area"
-                                    value={formData.area}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="plotArea">Plot Area (acres)</label>
-                                <input
-                                    type="number"
-                                    id="plotArea"
-                                    name="plotArea"
-                                    value={formData.plotArea}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                )}
+                <form onSubmit={handleSubmit}>
+                    <TabPanels>
+                        {/* Basic Information Tab */}
+                        <TabPanel px={0}>
+                            <VStack spacing={6} align="stretch">
+                                <Heading size="md" color="#111111" fontWeight="600">
+                                    Basic Information
+                                </Heading>
 
-                {/* Property Details Section */}
-                {activeSection === 'details' && (
-                    <div className="form-section">
-                        <h4>Characteristics</h4>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="wallType">Wall Type</label>
-                                <input
-                                    type="text"
-                                    id="wallType"
-                                    name="characteristics.wallType"
-                                    value={formData.characteristics.wallType}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="wallInsulation">Wall Insulation</label>
-                                <input
-                                    type="text"
-                                    id="wallInsulation"
-                                    name="characteristics.wallInsulation"
-                                    value={formData.characteristics.wallInsulation}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="roofType">Roof Type</label>
-                                <input
-                                    type="text"
-                                    id="roofType"
-                                    name="characteristics.roofType"
-                                    value={formData.characteristics.roofType}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="bathroom">Bathroom Type</label>
-                                <input
-                                    type="text"
-                                    id="bathroom"
-                                    name="characteristics.bathroom"
-                                    value={formData.characteristics.bathroom}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="heating">Heating</label>
-                                <input
-                                    type="text"
-                                    id="heating"
-                                    name="characteristics.heating"
-                                    value={formData.characteristics.heating}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="characteristics.floorHeating"
-                                        checked={formData.characteristics.floorHeating}
-                                        onChange={handleChange}
-                                    />
-                                    Floor Heating
-                                </label>
-                            </div>
-                        </div>
+                                <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+                                    <FormControl isRequired>
+                                        <FormLabel color="#222222" fontWeight="500">
+                                            Title
+                                        </FormLabel>
+                                        <Input
+                                            name="title"
+                                            value={formData.title}
+                                            onChange={handleChange}
+                                            placeholder="Enter property title"
+                                            borderRadius="xl"
+                                            borderColor="gray.200"
+                                            _hover={{ borderColor: "#F6AB5E" }}
+                                            _focus={{
+                                                borderColor: "#F5A623",
+                                                boxShadow: "0 0 0 1px #F5A623",
+                                            }}
+                                        />
+                                    </FormControl>
 
-                        <h4>Condition</h4>
-                        <div className="form-row">
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="condition.withRepair"
-                                        checked={formData.condition.withRepair}
-                                        onChange={handleChange}
-                                    />
-                                    With Repair
-                                </label>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="repairType">Repair Type</label>
-                                <input
-                                    type="text"
-                                    id="repairType"
-                                    name="condition.repairType"
-                                    value={formData.condition.repairType}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="condition.withFurniture"
-                                        checked={formData.condition.withFurniture}
-                                        onChange={handleChange}
-                                    />
-                                    With Furniture
-                                </label>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="yearBuilt">Year Built</label>
-                                <input
-                                    type="number"
-                                    id="yearBuilt"
-                                    name="condition.yearBuilt"
-                                    value={formData.condition.yearBuilt}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
+                                    <FormControl isRequired>
+                                        <FormLabel color="#222222" fontWeight="500">
+                                            Price (€)
+                                        </FormLabel>
+                                        <Input
+                                            type="number"
+                                            name="price"
+                                            value={formData.price}
+                                            onChange={handleChange}
+                                            placeholder="Enter price"
+                                            borderRadius="xl"
+                                            borderColor="gray.200"
+                                            _hover={{ borderColor: "#F6AB5E" }}
+                                            _focus={{
+                                                borderColor: "#F5A623",
+                                                boxShadow: "0 0 0 1px #F5A623",
+                                            }}
+                                        />
+                                    </FormControl>
+                                </SimpleGrid>
 
-                        <h4>Communications</h4>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="sewerage">Sewerage</label>
-                                <input
-                                    type="text"
-                                    id="sewerage"
-                                    name="communications.sewerage"
-                                    value={formData.communications.sewerage}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="water">Water</label>
-                                <input
-                                    type="text"
-                                    id="water"
-                                    name="communications.water"
-                                    value={formData.communications.water}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="communications.electricity"
-                                        checked={formData.communications.electricity}
+                                <FormControl isRequired>
+                                    <FormLabel color="#222222" fontWeight="500">
+                                        Address
+                                    </FormLabel>
+                                    <Input
+                                        name="address"
+                                        value={formData.address}
                                         onChange={handleChange}
+                                        placeholder="Enter full address"
+                                        borderRadius="xl"
+                                        borderColor="gray.200"
+                                        _hover={{ borderColor: "#F6AB5E" }}
+                                        _focus={{
+                                            borderColor: "#F5A623",
+                                            boxShadow: "0 0 0 1px #F5A623",
+                                        }}
                                     />
-                                    Electricity
-                                </label>
-                            </div>
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="communications.gas"
-                                        checked={formData.communications.gas}
-                                        onChange={handleChange}
-                                    />
-                                    Gas
-                                </label>
-                            </div>
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="communications.internet"
-                                        checked={formData.communications.internet}
-                                        onChange={handleChange}
-                                    />
-                                    Internet
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                )}
+                                </FormControl>
 
-                {/* Features Section */}
-                {activeSection === 'features' && (
-                    <div className="form-section">
-                        <h4>Features</h4>
-                        <div className="form-row">
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="features.hasGarage"
-                                        checked={formData.features.hasGarage}
+                                <FormControl isRequired>
+                                    <FormLabel color="#222222" fontWeight="500">
+                                        Description
+                                    </FormLabel>
+                                    <Textarea
+                                        name="description"
+                                        value={formData.description}
                                         onChange={handleChange}
+                                        placeholder="Enter detailed description"
+                                        rows={5}
+                                        borderRadius="xl"
+                                        borderColor="gray.200"
+                                        _hover={{ borderColor: "#F6AB5E" }}
+                                        _focus={{
+                                            borderColor: "#F5A623",
+                                            boxShadow: "0 0 0 1px #F5A623",
+                                        }}
                                     />
-                                    Garage
-                                </label>
-                            </div>
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="features.hasGarden"
-                                        checked={formData.features.hasGarden}
-                                        onChange={handleChange}
-                                    />
-                                    Garden
-                                </label>
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="features.hasBasement"
-                                        checked={formData.features.hasBasement}
-                                        onChange={handleChange}
-                                    />
-                                    Basement
-                                </label>
-                            </div>
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="features.hasTerrace"
-                                        checked={formData.features.hasTerrace}
-                                        onChange={handleChange}
-                                    />
-                                    Terrace
-                                </label>
-                            </div>
-                        </div>
+                                </FormControl>
 
-                        <h4>Infrastructure</h4>
-                        <div className="form-row">
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="infrastructure.school"
-                                        checked={formData.infrastructure.school}
-                                        onChange={handleChange}
-                                    />
-                                    School
-                                </label>
-                            </div>
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="infrastructure.kindergarten"
-                                        checked={formData.infrastructure.kindergarten}
-                                        onChange={handleChange}
-                                    />
-                                    Kindergarten
-                                </label>
-                            </div>
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="infrastructure.hospital"
-                                        checked={formData.infrastructure.hospital}
-                                        onChange={handleChange}
-                                    />
-                                    Hospital
-                                </label>
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="infrastructure.park"
-                                        checked={formData.infrastructure.park}
-                                        onChange={handleChange}
-                                    />
-                                    Park
-                                </label>
-                            </div>
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="infrastructure.publicTransport"
-                                        checked={formData.infrastructure.publicTransport}
-                                        onChange={handleChange}
-                                    />
-                                    Public Transport
-                                </label>
-                            </div>
-                            <div className="form-group checkbox-group">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        name="infrastructure.shopping"
-                                        checked={formData.infrastructure.shopping}
-                                        onChange={handleChange}
-                                    />
-                                    Shopping
-                                </label>
-                            </div>
-                        </div>
-                        <h5>Distances (km)</h5>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="toCenter">To Center</label>
-                                <input
-                                    type="number"
-                                    id="toCenter"
-                                    name="infrastructure.distance[toCenter]"
-                                    value={formData.infrastructure.distance.toCenter}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="toSchool">To School</label>
-                                <input
-                                    type="number"
-                                    id="toSchool"
-                                    name="infrastructure.distance[toSchool]"
-                                    value={formData.infrastructure.distance.toSchool}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="toTransport">To Transport</label>
-                                <input
-                                    type="number"
-                                    id="toTransport"
-                                    name="infrastructure.distance[toTransport]"
-                                    value={formData.infrastructure.distance.toTransport}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                )}
+                                <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4}>
+                                    <FormControl isRequired>
+                                        <FormLabel color="#222222" fontWeight="500">
+                                            Bedrooms
+                                        </FormLabel>
+                                        <Input
+                                            type="number"
+                                            name="bedrooms"
+                                            value={formData.bedrooms}
+                                            onChange={handleChange}
+                                            placeholder="Number of bedrooms"
+                                            borderRadius="xl"
+                                            borderColor="gray.200"
+                                            _hover={{ borderColor: "#F6AB5E" }}
+                                            _focus={{
+                                                borderColor: "#F5A623",
+                                                boxShadow: "0 0 0 1px #F5A623",
+                                            }}
+                                        />
+                                    </FormControl>
 
-                {/* Location Section */}
-                {activeSection === 'location' && (
-                    <div className="form-section">
-                        <h4>Location</h4>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="district">District</label>
-                                <input
-                                    type="text"
-                                    id="district"
-                                    name="location.district"
-                                    value={formData.location.district}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="city">City</label>
-                                <input
-                                    type="text"
-                                    id="city"
-                                    name="location.city"
-                                    value={formData.location.city}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="lat">Latitude</label>
-                                <input
-                                    type="number"
-                                    id="lat"
-                                    name="location.coordinates.lat"
-                                    value={formData.location.coordinates.lat}
-                                    onChange={(e) => {
-                                        setFormData(prev => ({
-                                            ...prev,
-                                            location: {
-                                                ...prev.location,
-                                                coordinates: {
-                                                    ...prev.location.coordinates,
-                                                    lat: parseFloat(e.target.value) || 0
-                                                }
-                                            }
-                                        }));
-                                    }}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="lng">Longitude</label>
-                                <input
-                                    type="number"
-                                    id="lng"
-                                    name="location.coordinates.lng"
-                                    value={formData.location.coordinates.lng}
-                                    onChange={(e) => {
-                                        setFormData(prev => ({
-                                            ...prev,
-                                            location: {
-                                                ...prev.location,
-                                                coordinates: {
-                                                    ...prev.location.coordinates,
-                                                    lng: parseFloat(e.target.value) || 0
-                                                }
-                                            }
-                                        }));
-                                    }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                )}
+                                    <FormControl isRequired>
+                                        <FormLabel color="#222222" fontWeight="500">
+                                            Bathrooms
+                                        </FormLabel>
+                                        <Input
+                                            type="number"
+                                            name="bathrooms"
+                                            value={formData.bathrooms}
+                                            onChange={handleChange}
+                                            placeholder="Number of bathrooms"
+                                            borderRadius="xl"
+                                            borderColor="gray.200"
+                                            _hover={{ borderColor: "#F6AB5E" }}
+                                            _focus={{
+                                                borderColor: "#F5A623",
+                                                boxShadow: "0 0 0 1px #F5A623",
+                                            }}
+                                        />
+                                    </FormControl>
 
-                {/* Images Section */}
-                {activeSection === 'images' && (
-                    <div className="form-section">
-                        <h4>Images</h4>
-                        <div className="form-group">
-                            <label htmlFor="images">Upload Images</label>
-                            <input
-                                type="file"
-                                id="images"
-                                name="images"
-                                accept="image/*"
-                                multiple
-                                onChange={handleImageUpload}
-                            />
-                        </div>
-                        {uploadedImages.length > 0 && (
-                            <div className="image-previews">
-                                <h5>Uploaded Images</h5>
-                                <div className="image-grid">
-                                    {uploadedImages.map((image, index) => (
-                                        <div key={index} className="image-item">
-                                            <img src={image.preview} alt={`Preview ${index}`} />
-                                            <button 
-                                                type="button" 
-                                                className="remove-image-button"
-                                                onClick={() => removeImage(index)}
+                                    <FormControl>
+                                        <FormLabel color="#222222" fontWeight="500">
+                                            Floors
+                                        </FormLabel>
+                                        <Input
+                                            type="number"
+                                            name="floors"
+                                            value={formData.floors}
+                                            onChange={handleChange}
+                                            placeholder="Number of floors"
+                                            borderRadius="xl"
+                                            borderColor="gray.200"
+                                            _hover={{ borderColor: "#F6AB5E" }}
+                                            _focus={{
+                                                borderColor: "#F5A623",
+                                                boxShadow: "0 0 0 1px #F5A623",
+                                            }}
+                                        />
+                                    </FormControl>
+                                </SimpleGrid>
+
+                                <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+                                    <FormControl isRequired>
+                                        <FormLabel color="#222222" fontWeight="500">
+                                            Area (m²)
+                                        </FormLabel>
+                                        <Input
+                                            type="number"
+                                            name="area"
+                                            value={formData.area}
+                                            onChange={handleChange}
+                                            placeholder="Living area in m²"
+                                            borderRadius="xl"
+                                            borderColor="gray.200"
+                                            _hover={{ borderColor: "#F6AB5E" }}
+                                            _focus={{
+                                                borderColor: "#F5A623",
+                                                boxShadow: "0 0 0 1px #F5A623",
+                                            }}
+                                        />
+                                    </FormControl>
+
+                                    <FormControl>
+                                        <FormLabel color="#222222" fontWeight="500">
+                                            Plot Area (acres)
+                                        </FormLabel>
+                                        <Input
+                                            type="number"
+                                            name="plotArea"
+                                            value={formData.plotArea}
+                                            onChange={handleChange}
+                                            placeholder="Plot area in acres"
+                                            borderRadius="xl"
+                                            borderColor="gray.200"
+                                            _hover={{ borderColor: "#F6AB5E" }}
+                                            _focus={{
+                                                borderColor: "#F5A623",
+                                                boxShadow: "0 0 0 1px #F5A623",
+                                            }}
+                                        />
+                                    </FormControl>
+                                </SimpleGrid>
+                            </VStack>
+                        </TabPanel>
+
+                        {/* Property Details Tab */}
+                        <TabPanel px={0}>
+                            <VStack spacing={8} align="stretch">
+                                {/* Characteristics Section */}
+                                <Box>
+                                    <Heading size="md" color="#111111" fontWeight="600" mb={4}>
+                                        Characteristics
+                                    </Heading>
+                                    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+                                        <FormControl>
+                                            <FormLabel color="#222222" fontWeight="500">Wall Type</FormLabel>
+                                            <Input
+                                                name="characteristics.wallType"
+                                                value={formData.characteristics.wallType}
+                                                onChange={handleChange}
+                                                placeholder="e.g., Brick, Concrete"
+                                                borderRadius="xl"
+                                                borderColor="gray.200"
+                                                _hover={{ borderColor: "#F6AB5E" }}
+                                                _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                            />
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <FormLabel color="#222222" fontWeight="500">Wall Insulation</FormLabel>
+                                            <Input
+                                                name="characteristics.wallInsulation"
+                                                value={formData.characteristics.wallInsulation}
+                                                onChange={handleChange}
+                                                placeholder="e.g., Foam, Mineral wool"
+                                                borderRadius="xl"
+                                                borderColor="gray.200"
+                                                _hover={{ borderColor: "#F6AB5E" }}
+                                                _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                            />
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <FormLabel color="#222222" fontWeight="500">Roof Type</FormLabel>
+                                            <Input
+                                                name="characteristics.roofType"
+                                                value={formData.characteristics.roofType}
+                                                onChange={handleChange}
+                                                placeholder="e.g., Metal, Tile"
+                                                borderRadius="xl"
+                                                borderColor="gray.200"
+                                                _hover={{ borderColor: "#F6AB5E" }}
+                                                _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                            />
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <FormLabel color="#222222" fontWeight="500">Bathroom Type</FormLabel>
+                                            <Input
+                                                name="characteristics.bathroom"
+                                                value={formData.characteristics.bathroom}
+                                                onChange={handleChange}
+                                                placeholder="e.g., Combined, Separate"
+                                                borderRadius="xl"
+                                                borderColor="gray.200"
+                                                _hover={{ borderColor: "#F6AB5E" }}
+                                                _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                            />
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <FormLabel color="#222222" fontWeight="500">Heating</FormLabel>
+                                            <Input
+                                                name="characteristics.heating"
+                                                value={formData.characteristics.heating}
+                                                onChange={handleChange}
+                                                placeholder="e.g., Gas, Electric"
+                                                borderRadius="xl"
+                                                borderColor="gray.200"
+                                                _hover={{ borderColor: "#F6AB5E" }}
+                                                _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                            />
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <Checkbox
+                                                name="characteristics.floorHeating"
+                                                isChecked={formData.characteristics.floorHeating}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
                                             >
-                                                Remove
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                )}
+                                                Floor Heating
+                                            </Checkbox>
+                                        </FormControl>
+                                    </SimpleGrid>
+                                </Box>
 
-                {/* Contact Section */}
-                {activeSection === 'contact' && (
-                    <div className="form-section">
-                        <h4>Contact Information</h4>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <label htmlFor="contactName">Name</label>
-                                <input
-                                    type="text"
-                                    id="contactName"
-                                    name="contactInfo.name"
-                                    value={formData.contactInfo.name}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="contactPhone">Phone</label>
-                                <input
-                                    type="tel"
-                                    id="contactPhone"
-                                    name="contactInfo.phone"
-                                    value={formData.contactInfo.phone}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="contactEmail">Email</label>
-                            <input
-                                type="email"
-                                id="contactEmail"
-                                name="contactInfo.email"
-                                value={formData.contactInfo.email}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="status">Status</label>
-                            <select
-                                id="status"
-                                name="status"
-                                value={formData.status}
-                                onChange={handleChange}
+                                <Divider />
+
+                                {/* Condition Section */}
+                                <Box>
+                                    <Heading size="md" color="#111111" fontWeight="600" mb={4}>
+                                        Condition
+                                    </Heading>
+                                    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+                                        <FormControl>
+                                            <Checkbox
+                                                name="condition.withRepair"
+                                                isChecked={formData.condition.withRepair}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                With Repair
+                                            </Checkbox>
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <FormLabel color="#222222" fontWeight="500">Repair Type</FormLabel>
+                                            <Input
+                                                name="condition.repairType"
+                                                value={formData.condition.repairType}
+                                                onChange={handleChange}
+                                                placeholder="e.g., Cosmetic, Major"
+                                                borderRadius="xl"
+                                                borderColor="gray.200"
+                                                _hover={{ borderColor: "#F6AB5E" }}
+                                                _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                            />
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <Checkbox
+                                                name="condition.withFurniture"
+                                                isChecked={formData.condition.withFurniture}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                With Furniture
+                                            </Checkbox>
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <FormLabel color="#222222" fontWeight="500">Year Built</FormLabel>
+                                            <Input
+                                                type="number"
+                                                name="condition.yearBuilt"
+                                                value={formData.condition.yearBuilt}
+                                                onChange={handleChange}
+                                                borderRadius="xl"
+                                                borderColor="gray.200"
+                                                _hover={{ borderColor: "#F6AB5E" }}
+                                                _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                            />
+                                        </FormControl>
+                                    </SimpleGrid>
+                                </Box>
+
+                                <Divider />
+
+                                {/* Communications Section */}
+                                <Box>
+                                    <Heading size="md" color="#111111" fontWeight="600" mb={4}>
+                                        Communications
+                                    </Heading>
+                                    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+                                        <FormControl>
+                                            <FormLabel color="#222222" fontWeight="500">Sewerage</FormLabel>
+                                            <Input
+                                                name="communications.sewerage"
+                                                value={formData.communications.sewerage}
+                                                onChange={handleChange}
+                                                placeholder="e.g., Central, Septic"
+                                                borderRadius="xl"
+                                                borderColor="gray.200"
+                                                _hover={{ borderColor: "#F6AB5E" }}
+                                                _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                            />
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <FormLabel color="#222222" fontWeight="500">Water</FormLabel>
+                                            <Input
+                                                name="communications.water"
+                                                value={formData.communications.water}
+                                                onChange={handleChange}
+                                                placeholder="e.g., Central, Well"
+                                                borderRadius="xl"
+                                                borderColor="gray.200"
+                                                _hover={{ borderColor: "#F6AB5E" }}
+                                                _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                            />
+                                        </FormControl>
+                                    </SimpleGrid>
+
+                                    <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4} mt={4}>
+                                        <FormControl>
+                                            <Checkbox
+                                                name="communications.electricity"
+                                                isChecked={formData.communications.electricity}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                Electricity
+                                            </Checkbox>
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <Checkbox
+                                                name="communications.gas"
+                                                isChecked={formData.communications.gas}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                Gas
+                                            </Checkbox>
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <Checkbox
+                                                name="communications.internet"
+                                                isChecked={formData.communications.internet}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                Internet
+                                            </Checkbox>
+                                        </FormControl>
+                                    </SimpleGrid>
+                                </Box>
+                            </VStack>
+                        </TabPanel>
+
+                        {/* Features Tab */}
+                        <TabPanel px={0}>
+                            <VStack spacing={8} align="stretch">
+                                {/* Property Features */}
+                                <Box>
+                                    <Heading size="md" color="#111111" fontWeight="600" mb={4}>
+                                        Property Features
+                                    </Heading>
+                                    <SimpleGrid columns={{ base: 2, md: 4 }} spacing={4}>
+                                        <FormControl>
+                                            <Checkbox
+                                                name="features.hasGarage"
+                                                isChecked={formData.features.hasGarage}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                Garage
+                                            </Checkbox>
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <Checkbox
+                                                name="features.hasGarden"
+                                                isChecked={formData.features.hasGarden}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                Garden
+                                            </Checkbox>
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <Checkbox
+                                                name="features.hasBasement"
+                                                isChecked={formData.features.hasBasement}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                Basement
+                                            </Checkbox>
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <Checkbox
+                                                name="features.hasTerrace"
+                                                isChecked={formData.features.hasTerrace}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                Terrace
+                                            </Checkbox>
+                                        </FormControl>
+                                    </SimpleGrid>
+                                </Box>
+
+                                <Divider />
+
+                                {/* Infrastructure */}
+                                <Box>
+                                    <Heading size="md" color="#111111" fontWeight="600" mb={4}>
+                                        Infrastructure
+                                    </Heading>
+                                    <SimpleGrid columns={{ base: 2, md: 3 }} spacing={4}>
+                                        <FormControl>
+                                            <Checkbox
+                                                name="infrastructure.school"
+                                                isChecked={formData.infrastructure.school}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                School
+                                            </Checkbox>
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <Checkbox
+                                                name="infrastructure.kindergarten"
+                                                isChecked={formData.infrastructure.kindergarten}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                Kindergarten
+                                            </Checkbox>
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <Checkbox
+                                                name="infrastructure.hospital"
+                                                isChecked={formData.infrastructure.hospital}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                Hospital
+                                            </Checkbox>
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <Checkbox
+                                                name="infrastructure.park"
+                                                isChecked={formData.infrastructure.park}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                Park
+                                            </Checkbox>
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <Checkbox
+                                                name="infrastructure.publicTransport"
+                                                isChecked={formData.infrastructure.publicTransport}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                Public Transport
+                                            </Checkbox>
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <Checkbox
+                                                name="infrastructure.shopping"
+                                                isChecked={formData.infrastructure.shopping}
+                                                onChange={handleChange}
+                                                colorScheme="orange"
+                                                size="lg"
+                                                color="#222222"
+                                                fontWeight="500"
+                                                sx={{
+                                                    '.chakra-checkbox__control': {
+                                                        borderColor: 'gray.200',
+                                                        _checked: {
+                                                            bg: '#F5A623',
+                                                            borderColor: '#F5A623',
+                                                        },
+                                                        _hover: {
+                                                            borderColor: '#F6AB5E',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                Shopping
+                                            </Checkbox>
+                                        </FormControl>
+                                    </SimpleGrid>
+
+                                    <Box mt={6}>
+                                        <Heading size="sm" color="#111111" fontWeight="600" mb={3}>
+                                            Distances (km)
+                                        </Heading>
+                                        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4}>
+                                            <FormControl>
+                                                <FormLabel color="#222222" fontWeight="500">To Center</FormLabel>
+                                                <Input
+                                                    type="number"
+                                                    name="infrastructure.distance[toCenter]"
+                                                    value={formData.infrastructure.distance.toCenter}
+                                                    onChange={handleChange}
+                                                    placeholder="Distance in km"
+                                                    borderRadius="xl"
+                                                    borderColor="gray.200"
+                                                    _hover={{ borderColor: "#F6AB5E" }}
+                                                    _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                                />
+                                            </FormControl>
+
+                                            <FormControl>
+                                                <FormLabel color="#222222" fontWeight="500">To School</FormLabel>
+                                                <Input
+                                                    type="number"
+                                                    name="infrastructure.distance[toSchool]"
+                                                    value={formData.infrastructure.distance.toSchool}
+                                                    onChange={handleChange}
+                                                    placeholder="Distance in km"
+                                                    borderRadius="xl"
+                                                    borderColor="gray.200"
+                                                    _hover={{ borderColor: "#F6AB5E" }}
+                                                    _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                                />
+                                            </FormControl>
+
+                                            <FormControl>
+                                                <FormLabel color="#222222" fontWeight="500">To Transport</FormLabel>
+                                                <Input
+                                                    type="number"
+                                                    name="infrastructure.distance[toTransport]"
+                                                    value={formData.infrastructure.distance.toTransport}
+                                                    onChange={handleChange}
+                                                    placeholder="Distance in km"
+                                                    borderRadius="xl"
+                                                    borderColor="gray.200"
+                                                    _hover={{ borderColor: "#F6AB5E" }}
+                                                    _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                                />
+                                            </FormControl>
+                                        </SimpleGrid>
+                                    </Box>
+                                </Box>
+                            </VStack>
+                        </TabPanel>
+
+                        {/* Location Tab */}
+                        <TabPanel px={0}>
+                            <VStack spacing={6} align="stretch">
+                                <Heading size="md" color="#111111" fontWeight="600">
+                                    Location Information
+                                </Heading>
+
+                                <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+                                    <FormControl>
+                                        <FormLabel color="#222222" fontWeight="500">District</FormLabel>
+                                        <Input
+                                            name="location.district"
+                                            value={formData.location.district}
+                                            onChange={handleChange}
+                                            placeholder="Enter district"
+                                            borderRadius="xl"
+                                            borderColor="gray.200"
+                                            _hover={{ borderColor: "#F6AB5E" }}
+                                            _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                        />
+                                    </FormControl>
+
+                                    <FormControl>
+                                        <FormLabel color="#222222" fontWeight="500">City</FormLabel>
+                                        <Input
+                                            name="location.city"
+                                            value={formData.location.city}
+                                            onChange={handleChange}
+                                            placeholder="Enter city"
+                                            borderRadius="xl"
+                                            borderColor="gray.200"
+                                            _hover={{ borderColor: "#F6AB5E" }}
+                                            _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                        />
+                                    </FormControl>
+                                </SimpleGrid>
+
+                                <Box>
+                                    <Heading size="sm" color="#111111" fontWeight="600" mb={3}>
+                                        Coordinates
+                                    </Heading>
+                                    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+                                        <FormControl>
+                                            <FormLabel color="#222222" fontWeight="500">Latitude</FormLabel>
+                                            <Input
+                                                type="number"
+                                                step="any"
+                                                value={formData.location.coordinates.lat}
+                                                onChange={(e) => {
+                                                    setFormData(prev => ({
+                                                        ...prev,
+                                                        location: {
+                                                            ...prev.location,
+                                                            coordinates: {
+                                                                ...prev.location.coordinates,
+                                                                lat: parseFloat(e.target.value) || 0
+                                                            }
+                                                        }
+                                                    }));
+                                                }}
+                                                placeholder="e.g., 50.4501"
+                                                borderRadius="xl"
+                                                borderColor="gray.200"
+                                                _hover={{ borderColor: "#F6AB5E" }}
+                                                _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                            />
+                                        </FormControl>
+
+                                        <FormControl>
+                                            <FormLabel color="#222222" fontWeight="500">Longitude</FormLabel>
+                                            <Input
+                                                type="number"
+                                                step="any"
+                                                value={formData.location.coordinates.lng}
+                                                onChange={(e) => {
+                                                    setFormData(prev => ({
+                                                        ...prev,
+                                                        location: {
+                                                            ...prev.location,
+                                                            coordinates: {
+                                                                ...prev.location.coordinates,
+                                                                lng: parseFloat(e.target.value) || 0
+                                                            }
+                                                        }
+                                                    }));
+                                                }}
+                                                placeholder="e.g., 30.5234"
+                                                borderRadius="xl"
+                                                borderColor="gray.200"
+                                                _hover={{ borderColor: "#F6AB5E" }}
+                                                _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                            />
+                                        </FormControl>
+                                    </SimpleGrid>
+                                </Box>
+                            </VStack>
+                        </TabPanel>
+
+                        {/* Images Tab */}
+                        <TabPanel px={0}>
+                            <VStack spacing={6} align="stretch">
+                                <Heading size="md" color="#111111" fontWeight="600">
+                                    Property Images
+                                </Heading>
+
+                                <FormControl>
+                                    <FormLabel color="#222222" fontWeight="500">Upload Images</FormLabel>
+                                    <Input
+                                        type="file"
+                                        accept="image/*"
+                                        multiple
+                                        onChange={handleImageUpload}
+                                        p={2}
+                                        borderRadius="xl"
+                                        borderColor="gray.200"
+                                        _hover={{ borderColor: "#F6AB5E" }}
+                                        _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                    />
+                                </FormControl>
+
+                                {uploadedImages.length > 0 && (
+                                    <Box>
+                                        <Heading size="sm" color="#111111" fontWeight="600" mb={4}>
+                                            Uploaded Images
+                                        </Heading>
+                                        <SimpleGrid columns={{ base: 2, md: 3, lg: 4 }} spacing={4}>
+                                            {uploadedImages.map((image, index) => (
+                                                <Box
+                                                    key={index}
+                                                    position="relative"
+                                                    borderRadius="xl"
+                                                    overflow="hidden"
+                                                    boxShadow="md"
+                                                    transition="all 0.3s ease"
+                                                    _hover={{ boxShadow: "lg", transform: "translateY(-2px)" }}
+                                                >
+                                                    <Image
+                                                        src={image.preview}
+                                                        alt={`Preview ${index}`}
+                                                        w="100%"
+                                                        h="150px"
+                                                        objectFit="cover"
+                                                    />
+                                                    <IconButton
+                                                        icon={<Text fontSize="sm">×</Text>}
+                                                        position="absolute"
+                                                        top={2}
+                                                        right={2}
+                                                        size="sm"
+                                                        colorScheme="red"
+                                                        borderRadius="full"
+                                                        onClick={() => removeImage(index)}
+                                                        aria-label="Remove image"
+                                                        _hover={{
+                                                            transform: "scale(1.1)",
+                                                        }}
+                                                    />
+                                                </Box>
+                                            ))}
+                                        </SimpleGrid>
+                                    </Box>
+                                )}
+                            </VStack>
+                        </TabPanel>
+
+                        {/* Contact Tab */}
+                        <TabPanel px={0}>
+                            <VStack spacing={6} align="stretch">
+                                <Heading size="md" color="#111111" fontWeight="600">
+                                    Contact Information
+                                </Heading>
+
+                                <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+                                    <FormControl>
+                                        <FormLabel color="#222222" fontWeight="500">Name</FormLabel>
+                                        <Input
+                                            name="contactInfo.name"
+                                            value={formData.contactInfo.name}
+                                            onChange={handleChange}
+                                            placeholder="Contact person name"
+                                            borderRadius="xl"
+                                            borderColor="gray.200"
+                                            _hover={{ borderColor: "#F6AB5E" }}
+                                            _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                        />
+                                    </FormControl>
+
+                                    <FormControl>
+                                        <FormLabel color="#222222" fontWeight="500">Phone</FormLabel>
+                                        <Input
+                                            type="tel"
+                                            name="contactInfo.phone"
+                                            value={formData.contactInfo.phone}
+                                            onChange={handleChange}
+                                            placeholder="Phone number"
+                                            borderRadius="xl"
+                                            borderColor="gray.200"
+                                            _hover={{ borderColor: "#F6AB5E" }}
+                                            _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                        />
+                                    </FormControl>
+                                </SimpleGrid>
+
+                                <FormControl>
+                                    <FormLabel color="#222222" fontWeight="500">Email</FormLabel>
+                                    <Input
+                                        type="email"
+                                        name="contactInfo.email"
+                                        value={formData.contactInfo.email}
+                                        onChange={handleChange}
+                                        placeholder="Email address"
+                                        borderRadius="xl"
+                                        borderColor="gray.200"
+                                        _hover={{ borderColor: "#F6AB5E" }}
+                                        _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                    />
+                                </FormControl>
+
+                                <FormControl>
+                                    <FormLabel color="#222222" fontWeight="500">Status</FormLabel>
+                                    <Select
+                                        name="status"
+                                        value={formData.status}
+                                        onChange={handleChange}
+                                        borderRadius="xl"
+                                        borderColor="gray.200"
+                                        _hover={{ borderColor: "#F6AB5E" }}
+                                        _focus={{ borderColor: "#F5A623", boxShadow: "0 0 0 1px #F5A623" }}
+                                    >
+                                        <option value="available">Available</option>
+                                        <option value="sold">Sold</option>
+                                        <option value="reserved">Reserved</option>
+                                    </Select>
+                                </FormControl>
+                            </VStack>
+                        </TabPanel>
+                    </TabPanels>
+
+                    {/* Form Status and Actions */}
+                    <Box mt={8}>
+                        {formStatus.message && (
+                            <Alert
+                                status={formStatus.type === 'success' ? 'success' : formStatus.type === 'info' ? 'info' : 'error'}
+                                borderRadius="xl"
+                                mb={4}
                             >
-                                <option value="available">Available</option>
-                                <option value="sold">Sold</option>
-                                <option value="reserved">Reserved</option>
-                            </select>
-                        </div>
-                    </div>
-                )}
+                                <AlertIcon />
+                                {formStatus.message}
+                            </Alert>
+                        )}
 
-                {formStatus.message && (
-                    <div className={`form-status ${formStatus.type}`}>
-                        {formStatus.message}
-                    </div>
-                )}
-
-                <div className="form-actions">
-                    <button type="submit" className="submit-button">
-                        {isEditMode ? 'Update House' : 'Add House'}
-                    </button>
-                    {isEditMode && (
-                        <button 
-                            type="button" 
-                            className="cancel-button"
-                            onClick={() => onFormSubmit && onFormSubmit(null)}
+                        <Flex
+                            direction={{ base: "column", md: "row" }}
+                            gap={4}
+                            justify={{ base: "center", md: "flex-end" }}
                         >
-                            Cancel
-                        </button>
-                    )}
-                </div>
-            </form>
-        </div>
+                            {isEditMode && (
+                                <Button
+                                    type="button"
+                                    onClick={() => onFormSubmit && onFormSubmit(null)}
+                                    variant="outline"
+                                    borderColor="#111111"
+                                    color="#111111"
+                                    borderRadius="xl"
+                                    size="lg"
+                                    _hover={{
+                                        bg: "gray.50",
+                                        transform: "translateY(-1px)",
+                                    }}
+                                    transition="all 0.3s ease"
+                                >
+                                    Cancel
+                                </Button>
+                            )}
+
+                            <Button
+                                type="submit"
+                                bg="linear-gradient(135deg, #F7C272 0%, #F4B94F 100%)"
+                                color="white"
+                                size="lg"
+                                borderRadius="xl"
+                                fontWeight="600"
+                                _hover={{
+                                    bg: "linear-gradient(135deg, #F6AB5E 0%, #F5A623 100%)",
+                                    transform: "translateY(-2px)",
+                                    boxShadow: "lg",
+                                }}
+                                _active={{
+                                    transform: "translateY(0)",
+                                    boxShadow: "md",
+                                }}
+                                transition="all 0.3s ease"
+                                minW="200px"
+                            >
+                                {isEditMode ? 'Update House' : 'Add House'}
+                            </Button>
+                        </Flex>
+                    </Box>
+                </form>
+            </Tabs>
+        </Box>
     );
 };
 

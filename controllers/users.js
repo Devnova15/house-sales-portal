@@ -14,7 +14,7 @@ exports.registerUser = async (req, res) => {
   try {
     let user = await User.findOne({ $or: [{ email }, { login }] });
     if (user) {
-      errors.auth = "Пользователь с таким email или логином уже существует";
+      errors.auth = "Користувач із таким email або логіном вже існує";
       return res.status(400).json(errors);
     }
     const newUser = new User({
@@ -32,7 +32,7 @@ exports.registerUser = async (req, res) => {
     await newUser.save();
     return res.json({ success: true });
   } catch (err) {
-    return res.status(500).json({ error: "Ошибка сервера" });
+    return res.status(500).json({ error: "Помилка сервера" });
   }
 };
 
@@ -48,16 +48,16 @@ exports.loginUser = async (req, res) => {
       $or: [{ email: loginOrEmail }, { login: loginOrEmail }]
     });
     if (!user) {
-      errors.auth = "Неверные учетные данные";
+      errors.auth = "Невірні облікові дані";
       return res.status(401).json(errors);
     }
     if (!user.enabled) {
-      errors.auth = "Пользователь отключен";
+      errors.auth = "Користувач вимкнено";
       return res.status(401).json(errors);
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      errors.auth = "Неверные учетные данные";
+      errors.auth = "Невірні облікові дані";
       return res.status(401).json(errors);
     }
     const payload = {
@@ -78,7 +78,7 @@ exports.loginUser = async (req, res) => {
       }
     );
   } catch (err) {
-    return res.status(500).json({ error: "Ошибка сервера" });
+    return res.status(500).json({ error: "Помилка сервера" });
   }
 };
 

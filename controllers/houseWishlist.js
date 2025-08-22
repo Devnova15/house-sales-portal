@@ -6,7 +6,7 @@ const Customer = require("../models/Customer");
 exports.getHouseWishlist = async (req, res) => {
   try {
     const customerId = req.user.id;
-    
+
     const wishlist = await HouseWishlist.findOne({ customerId }).populate({
       path: 'houses',
       model: 'houses'
@@ -37,7 +37,7 @@ exports.addHouseToWishlist = async (req, res) => {
 
     // Find or create wishlist
     let wishlist = await HouseWishlist.findOne({ customerId });
-    
+
     if (!wishlist) {
       wishlist = new HouseWishlist({ customerId, houses: [houseId] });
     } else {
@@ -56,9 +56,9 @@ exports.addHouseToWishlist = async (req, res) => {
       model: 'houses'
     });
 
-    res.status(200).json({ 
+    res.status(200).json({
       message: "Дом добавлен в избранное",
-      houses: updatedWishlist.houses 
+      houses: updatedWishlist.houses
     });
   } catch (error) {
     console.error("Ошибка при добавлении дома в wishlist:", error);
@@ -73,7 +73,7 @@ exports.removeHouseFromWishlist = async (req, res) => {
     const houseId = req.params.houseId;
 
     const wishlist = await HouseWishlist.findOne({ customerId });
-    
+
     if (!wishlist) {
       return res.status(404).json({ message: "Список избранных не найден" });
     }
@@ -88,7 +88,7 @@ exports.removeHouseFromWishlist = async (req, res) => {
       model: 'houses'
     });
 
-    res.status(200).json({ 
+    res.status(200).json({
       message: "Дом удален из избранного",
       houses: updatedWishlist ? updatedWishlist.houses : []
     });
@@ -105,7 +105,7 @@ exports.clearHouseWishlist = async (req, res) => {
 
     await HouseWishlist.findOneAndDelete({ customerId });
 
-    res.status(200).json({ 
+    res.status(200).json({
       message: "Список избранных очищен",
       houses: []
     });
@@ -122,7 +122,7 @@ exports.isHouseInWishlist = async (req, res) => {
     const houseId = req.params.houseId;
 
     const wishlist = await HouseWishlist.findOne({ customerId });
-    
+
     const isInWishlist = wishlist ? wishlist.houses.includes(houseId) : false;
 
     res.status(200).json({ isInWishlist });

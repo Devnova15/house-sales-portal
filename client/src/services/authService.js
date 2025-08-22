@@ -7,8 +7,7 @@ const setAuthToken = (token) => {
   if (token) {
     localStorage.setItem('jwtToken', token);
     // Set default Authorization header for all axios requests
-    axios.defaults.headers.common['Authorization'] = token;
-    // Emit custom event for auth state change
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;    // Emit custom event for auth state change
     window.dispatchEvent(new CustomEvent('authStateChanged', { detail: { authenticated: true } }));
   } else {
     localStorage.removeItem('jwtToken');
@@ -32,7 +31,7 @@ export const authService = {
       if (response.data.success && response.data.token) {
         setAuthToken(response.data.token);
       }
-      
+
       return response.data;
     } catch (error) {
       console.error('Registration error:', error);
@@ -51,7 +50,7 @@ export const authService = {
       if (response.data.success && response.data.token) {
         setAuthToken(response.data.token);
       }
-      
+
       return response.data;
     } catch (error) {
       console.error('Login error:', error);
